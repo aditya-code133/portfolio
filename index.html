@@ -166,6 +166,7 @@
                         "margin-mobile": "20px",
                         "container-max": "1440px",
                         "section-gap": "160px",
+                        "section-gap-mobile": "80px",
                         "margin-desktop": "80px",
                         "unit": "4px",
                         "gutter": "24px"
@@ -182,8 +183,10 @@
                     "fontSize": {
                         "headline-md": ["24px", { "lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "500" }],
                         "display-lg": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.15", "letterSpacing": "-0.02em", "fontWeight": "700" }],
                         "serif-italic": ["1.1em", { "fontWeight": "400" }],
                         "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
                         "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
                         "body-sm": ["14px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
                         "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }]
@@ -196,7 +199,7 @@
 
 <body class="bg-black">
     <nav
-        class="fixed top-0 left-0 w-full z-50 py-6 px-margin-desktop bg-transparent backdrop-blur-md border-b border-white/10 flex justify-between items-center max-w-container-max mx-auto left-1/2 -translate-x-1/2">
+        class="fixed top-0 left-0 w-full z-50 py-4 md:py-6 px-margin-mobile md:px-margin-desktop bg-transparent backdrop-blur-md border-b border-white/10 flex justify-between items-center max-w-container-max mx-auto left-1/2 -translate-x-1/2">
         <div class="flex items-center gap-4">
             <div class="relative w-8 h-8 flex items-center justify-center">
                 <div class="absolute inset-0 border border-white rounded-full opacity-20"></div>
@@ -216,20 +219,49 @@
                 href="#services">SERVICES</a>
         </div>
         <div class="flex items-center gap-3">
-            <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                href="#">
-                <span class="material-symbols-outlined text-[18px]">camera</span>
-            </a>
-            <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                href="#">
-                <span class="material-symbols-outlined text-[18px]">link</span>
-            </a>
-            <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                href="#">
-                <span class="material-symbols-outlined text-[18px]">person</span>
-            </a>
+            <div class="hidden sm:flex items-center gap-3">
+                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                    href="#">
+                    <span class="material-symbols-outlined text-[18px]">camera</span>
+                </a>
+                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                    href="#">
+                    <span class="material-symbols-outlined text-[18px]">link</span>
+                </a>
+                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
+                    href="#">
+                    <span class="material-symbols-outlined text-[18px]">person</span>
+                </a>
+            </div>
+            <button id="mobile-menu-btn"
+                class="md:hidden liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110 text-white"
+                aria-label="Toggle Menu">
+                <span class="material-symbols-outlined text-[20px]">menu</span>
+            </button>
         </div>
     </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center gap-8 transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none md:hidden">
+        <a class="text-2xl font-bold tracking-wider text-white hover:opacity-70 transition-opacity" href="#home">HOME</a>
+        <a class="text-2xl font-bold tracking-wider text-on-surface-variant hover:text-white transition-colors" href="#problem">THE PROBLEM</a>
+        <a class="text-2xl font-bold tracking-wider text-on-surface-variant hover:text-white transition-colors" href="#services">SERVICES</a>
+        
+        <!-- Mobile Social Icons inside Drawer -->
+        <div class="flex items-center gap-4 mt-8">
+            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
+                <span class="material-symbols-outlined text-[22px]">camera</span>
+            </a>
+            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
+                <span class="material-symbols-outlined text-[22px]">link</span>
+            </a>
+            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
+                <span class="material-symbols-outlined text-[22px]">person</span>
+            </a>
+        </div>
+    </div>
+
     <section
         class="relative min-h-screen flex flex-col items-center justify-center text-center px-margin-mobile pt-32 pb-20 overflow-hidden"
         id="home">
@@ -255,29 +287,29 @@
                 <span class="text-label-caps font-label-caps text-on-surface-variant">HELPING 15+ LOCAL EATERIES
                     DOMINATE ONLINE</span>
             </div>
-            <h1 class="text-display-lg font-display-lg mb-10 leading-[1.05] md:text-display-lg text-display-lg-mobile">
+            <h1 class="text-display-lg-mobile md:text-display-lg font-display-lg mb-10 leading-[1.05]">
                 Taste is local.<br />Your reach should be <span class="font-serif-italic">global.</span>
             </h1>
             <div
-                class="liquid-glass rim-light rounded-full p-2 pl-6 flex items-center max-w-md w-full gap-2 transition-all focus-within:ring-2 focus-within:ring-white/20">
-                <input class="bg-transparent border-none focus:ring-0 text-white placeholder-white/30 flex-grow py-3"
+                class="liquid-glass rim-light rounded-[24px] sm:rounded-full p-2 pl-4 sm:pl-6 flex flex-col sm:flex-row items-stretch sm:items-center max-w-md w-full gap-2 transition-all focus-within:ring-2 focus-within:ring-white/20">
+                <input class="bg-transparent border-none focus:ring-0 text-white placeholder-white/30 flex-grow py-3 px-2 sm:px-0 text-center sm:text-left"
                     placeholder="Enter your business email" type="email" />
                 <button
-                    class="bg-white text-black font-bold px-8 py-3 rounded-full hover:bg-opacity-90 transition-all text-label-caps">LET'S
+                    class="bg-white text-black font-bold px-8 py-4 sm:py-3 rounded-[18px] sm:rounded-full hover:bg-opacity-90 transition-all text-label-caps whitespace-nowrap">LET'S
                     TALK</button>
             </div>
         </div>
     </section>
-    <section class="py-section-gap px-margin-desktop max-w-container-max mx-auto" id="problem">
-        <div class="text-center mb-24">
+    <section class="py-section-gap-mobile md:py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="problem">
+        <div class="text-center mb-12 md:mb-24">
             <span class="text-label-caps font-label-caps text-on-surface-variant mb-4 block">THE CURRENT REALITY</span>
-            <h2 class="text-headline-xl font-headline-xl">Third-party apps take 30%.<br />What do you <span
+            <h2 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl">Third-party apps take 30%.<br />What do you <span
                     class="font-serif-italic">keep?</span></h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div
-                class="liquid-glass rim-light p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
+                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
                     <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
                         data-alt="A stylized 3D representation of a digital cage, symbolizing the aggregator trap for restaurants. Sharp geometric lines and a monochrome palette of deep blacks and cool whites. High-contrast lighting highlights the metallic textures of the structure."
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1Y2br8YncWq6bd7prTqLojwz0F4J6GiycYXZS1ku_0fc4xrqmv1qL690GeMVFRg-0o_BroaCMVY8S8gscwhbiQw9qQlAyU_Nfn_yaJSXh168NCC8epo8m3YxZhKeMoOMgILsEDAMCRIufoZ4yjam1X8eaOOs2UOuIJPfBQY9BpWU5laBkiIGrOTJmlcoDHTTZKW7xxPdwPOAK2kqyoYe80VBzUFur7n3DyHWc34yCwRwfnRWNIhbTmqmgJaF6Dz4jhCe9oWcXxv4a" />
@@ -288,8 +320,8 @@
                     margins and hides your customer data.</p>
             </div>
             <div
-                class="liquid-glass rim-light p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
+                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
                     <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
                         data-alt="A minimalist overhead view of an empty luxury restaurant plate in a dark room. The lighting is cinematic, focusing only on the white ceramic against the pure black background. Symbolizes a ghost menu and lost identity in the digital space."
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaLC7UjBRuFgWNA94JAk_fE-RzfDOwdvjgCoGWC0sFX8tgxhzjd82_RdUZO9USDgGRflMoUAzD1oq77LFy4_Jk9NJ4I9XjFlBqQ2wrTMeXFO7NNBgIv3xY8MqKzJUS1ns9aeiQgMtNECfIknyjmHiuPHYTmlqR1NG04QLBc_V6FSXoYgQ3q_T9eflXKFlDJR4Oxt6Qwt6HS3vHMhyxve1V0RLwxWVg6d40vdZiwKV-PHT4LLZFJX1o4fwmYUyLz9yY8huJmaR9V2_6" />
@@ -300,8 +332,8 @@
                     just another list item on a scrolling app.</p>
             </div>
             <div
-                class="liquid-glass rim-light p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
+                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
                     <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
                         data-alt="An abstract digital hourglass with sand falling into a void, representing zero customer retention. Minimalist aesthetic using black, white, and subtle grey tones. Cinematic lighting highlights the granular texture of the sand."
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCUt4YO7XMgBs0KfKuu1d2_ZNXnYDMiItuha_4nXtF-D54OKTqFCREqlLS_JiHm178SFGBMIMzYl1vOtVfZryX-5nBh9Bj1qLwMexIOk4L85XLp8PEFvpv3nr-EcJmQx-MlVE4g0nNAI36FzAgPwzZXgP9wNkSCpbN1GOEE5MUTjHs_8_l069PkbTPe6dUL4qOZgU5VwfoLepD453LyjPEiWZN6VCK9QlrX5PV98xXDmZq7PONhacaam4Jv56-5gATg9TG910Rl8MI" />
@@ -314,7 +346,7 @@
         </div>
     </section>
 
-    <section class="py-section-gap relative overflow-hidden" id="services">
+    <section class="py-section-gap-mobile md:py-section-gap relative overflow-hidden" id="services">
         <video autoplay="" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale" loop="" muted=""
             playsinline="">
             <source
@@ -322,13 +354,13 @@
                 type="video/mp4" />
         </video>
         <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
-        <div class="relative z-10 px-margin-desktop max-w-container-max mx-auto">
-            <div class="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
+        <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 md:mb-20 gap-8">
                 <div class="max-w-xl">
                     <span class="text-label-caps font-label-caps text-on-surface-variant mb-4 block">SERVICES</span>
-                    <h2 class="text-headline-xl font-headline-xl uppercase tracking-tighter">THE STRATEGY</h2>
+                    <h2 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl uppercase tracking-tighter">THE STRATEGY</h2>
                 </div>
-                <div class="w-full md:w-1/2 aspect-[3/1] rounded-lg overflow-hidden border border-white/10">
+                <div class="w-full md:w-1/2 aspect-video md:aspect-[3/1] rounded-lg overflow-hidden border border-white/10">
                     <video autoplay="" class="w-full h-full object-cover" loop="" muted="" playsinline="">
                         <source
                             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260325_125119_8e5ae31c-0021-4396-bc08-f7aebeb877a2.mp4"
@@ -336,7 +368,7 @@
                     </video>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-white/10 pt-20">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-white/10 pt-10 md:pt-20">
                 <div class="space-y-6">
                     <span class="text-label-caps font-label-caps text-white/40">01</span>
                     <h4 class="text-headline-md font-headline-md">INTERACTIVE MENUS</h4>
@@ -365,32 +397,32 @@
         </div>
     </section>
 
-    <section class="relative min-h-[819px] flex items-center justify-center overflow-hidden py-32 px-margin-mobile">
+    <section class="relative min-h-[500px] md:min-h-[819px] flex items-center justify-center overflow-hidden py-20 md:py-32 px-margin-mobile">
         <video class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale" id="hls-video" loop="" muted=""
             playsinline=""></video>
         <div class="absolute inset-0 bg-black/60"></div>
         <div class="relative z-10 text-center max-w-4xl mx-auto space-y-12">
-            <h2 class="text-display-lg md:text-display-lg text-display-lg-mobile font-display-lg">
+            <h2 class="text-display-lg-mobile md:text-display-lg font-display-lg">
                 Claim Your Digital <span class="font-serif-italic">Storefront</span>
             </h2>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                <a class="bg-white text-black font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps"
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-md mx-auto px-4 sm:px-0">
+                <a class="bg-white text-black font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps w-full sm:w-auto text-center"
                     href="#">CLAIM YOUR FREE AUDIT</a>
-                <a class="liquid-glass rim-light text-white font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps"
+                <a class="liquid-glass rim-light text-white font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps w-full sm:w-auto text-center"
                     href="#">VIEW MY BLUEPRINT</a>
             </div>
         </div>
     </section>
-
+ 
     <footer
-        class="w-full px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-unit max-w-container-max mx-auto border-t border-white/5 mt-auto bg-surface-container-lowest">
-        <div class="flex items-center gap-6">
+        class="w-full px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-unit max-w-container-max mx-auto border-t border-white/5 mt-auto bg-surface-container-lowest">
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
             <span class="text-label-caps font-headline-md text-primary">ADITYA SWAIN</span>
-            <span class="text-white/20">|</span>
+            <span class="hidden md:inline text-white/20">|</span>
             <span class="text-label-caps font-label-caps text-on-surface-variant">© 2024 ADITYA SWAIN. ALL RIGHTS
                 RESERVED.</span>
         </div>
-        <div class="flex gap-8 mt-6 md:mt-0">
+        <div class="flex gap-8 mt-4 md:mt-0">
             <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors"
                 href="#">Privacy Policy</a>
             <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors"
@@ -398,7 +430,7 @@
         </div>
     </footer>
     <script>
-
+ 
         document.addEventListener('DOMContentLoaded', function () {
             var video = document.getElementById('hls-video');
             var videoSrc = 'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8';
@@ -416,13 +448,13 @@
                 });
             }
         });
-
+ 
         gsap.registerPlugin(ScrollTrigger);
-
-
+ 
+ 
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('nav a');
-
+ 
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
@@ -432,7 +464,7 @@
                     current = section.getAttribute('id');
                 }
             });
-
+ 
             navLinks.forEach(link => {
                 link.classList.remove('text-primary', 'font-bold');
                 link.classList.add('text-on-surface-variant');
@@ -442,8 +474,8 @@
                 }
             });
         });
-
-
+ 
+ 
         document.querySelectorAll('.liquid-glass').forEach(btn => {
             btn.addEventListener('mouseenter', () => {
                 gsap.to(btn, { scale: 1.05, duration: 0.3 });
@@ -452,8 +484,8 @@
                 gsap.to(btn, { scale: 1, duration: 0.3 });
             });
         });
-
-
+ 
+ 
         function wrapWordsInSpans(element) {
             const children = Array.from(element.childNodes);
             children.forEach(child => {
@@ -473,9 +505,9 @@
                     child.replaceWith(fragment);
                 } else if (child.nodeType === Node.ELEMENT_NODE) {
                     const tag = child.tagName.toLowerCase();
-
+ 
                     if (['script', 'style', 'video', 'source', 'img', 'input', 'button', 'svg', 'br'].includes(tag)) return;
-
+ 
                     if (['span', 'a', 'strong', 'em', 'b', 'i'].includes(tag) &&
                         child.childNodes.length === 1 &&
                         child.childNodes[0].nodeType === Node.TEXT_NODE) {
@@ -486,16 +518,51 @@
                 }
             });
         }
-
-
+ 
+ 
         const textSelectors = 'h1, h2, h3, h4, h5, h6, p, span, a, li, label, footer';
         document.querySelectorAll(textSelectors).forEach(el => {
-
+ 
             if (!el.closest('.hover-word')) {
                 wrapWordsInSpans(el);
             }
         });
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                const mobileMenuIcon = mobileMenuBtn.querySelector('.material-symbols-outlined');
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+
+                function toggleMenu() {
+                    const isOpen = mobileMenu.classList.contains('translate-y-0');
+                    if (isOpen) {
+                        mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                        mobileMenuIcon.textContent = 'menu';
+                        document.body.style.overflow = '';
+                    } else {
+                        mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                        mobileMenu.classList.add('translate-y-0', 'opacity-100');
+                        mobileMenuIcon.textContent = 'close';
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+
+                mobileMenuBtn.addEventListener('click', toggleMenu);
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mobileMenu.classList.contains('translate-y-0')) {
+                            toggleMenu();
+                        }
+                    });
+                });
+            }
+        });
     </script>
 </body>
-
+ 
 </html>
