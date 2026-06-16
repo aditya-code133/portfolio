@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Aditya Swain — Digital Architect for Restaurants</title>
+    <title>Aditya Swain — Premium Digital Presence for Hotels</title>
+    <meta name="description" content="I build stunning websites for hotels that don't have one yet. Stop losing 15-25% to OTAs. Own your bookings, own your brand." />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         :root {
-            --bg-base: #000000;
+            --bg-base: #0a0a0a;
+            --gold: #c9a96e;
+            --gold-light: #e8d5a8;
+            --gold-dark: #8b6914;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -31,49 +32,107 @@
             overflow-x: hidden;
         }
 
-        .font-serif-italic {
-            font-family: 'Instrument Serif', serif;
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-playfair-italic {
+            font-family: 'Playfair Display', serif;
             font-style: italic;
         }
 
-        .liquid-glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        /* Gold gradient text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #c9a96e 0%, #e8d5a8 50%, #c9a96e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .liquid-glass:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Glass card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .word-reveal span {
-            display: inline-block;
-            opacity: 0.15;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(201, 169, 110, 0.35);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 16px 48px rgba(201, 169, 110, 0.08);
+            transform: translateY(-4px);
+        }
+
+        /* Glowing button */
+        .btn-gold {
+            background: linear-gradient(135deg, #c9a96e, #a07c3a);
+            color: #0a0a0a;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #e8d5a8, #c9a96e, #8b6914);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .word-reveal span.active {
-            opacity: 1;
-            color: #fff;
+        .btn-gold:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(201, 169, 110, 0.4);
         }
 
-        .hero-video-mask {
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .rim-light {
+        .btn-outline-gold:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 110, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Stat counter */
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(180deg, #ffffff, #888888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated gradient border */
+        .gradient-border {
             position: relative;
         }
 
-        .rim-light::after {
-            content: "";
+        .gradient-border::before {
+            content: '';
             position: absolute;
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.5), transparent 50%, rgba(201, 169, 110, 0.3));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -81,488 +140,996 @@
             pointer-events: none;
         }
 
-        @keyframes subtle-float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
         }
 
-        .float-anim {
-            animation: subtle-float 6s ease-in-out infinite;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
 
-        .hover-word {
-            display: inline-block;
-            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-                text-shadow 0.25s ease,
-                color 0.25s ease,
-                filter 0.25s ease;
-            cursor: default;
-            transform-style: preserve-3d;
-            perspective: 800px;
+        .float { animation: float 6s ease-in-out infinite; }
+
+        /* Pulse glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(201, 169, 110, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(201, 169, 110, 0.4); }
+        }
+
+        .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+        /* Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-track {
+            animation: marquee 30s linear infinite;
+        }
+
+        /* Number counter animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero pattern overlay */
+        .hero-pattern {
+            background-image: radial-gradient(rgba(201, 169, 110, 0.07) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Process connector line */
+        .process-line {
             position: relative;
         }
 
-        .hover-word:hover {
-            transform: translateY(-6px) scale(1.12) rotateX(-4deg);
-            text-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.4),
-                0 2px 0 rgba(255, 255, 255, 0.3),
-                0 4px 0 rgba(255, 255, 255, 0.2),
-                0 6px 0 rgba(255, 255, 255, 0.1),
-                0 8px 15px rgba(255, 255, 255, 0.08),
-                0 12px 30px rgba(0, 0, 0, 0.6);
-            color: #ffffff;
-            filter: brightness(1.3);
-            z-index: 10;
-        }
-
-        .hover-word::after {
+        .process-line::after {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 10%;
-            width: 80%;
-            height: 0;
-            background: radial-gradient(ellipse, rgba(255, 255, 255, 0.15), transparent);
-            border-radius: 50%;
-            transition: height 0.25s ease, opacity 0.25s ease;
-            opacity: 0;
-            pointer-events: none;
+            top: 50%;
+            right: -1rem;
+            width: 2rem;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(201, 169, 110, 0.4), transparent);
         }
 
-        .hover-word:hover::after {
-            height: 6px;
-            opacity: 1;
+        /* Testimonial card */
+        .testimonial-card {
+            background: linear-gradient(145deg, rgba(201, 169, 110, 0.05), rgba(255, 255, 255, 0.02));
+        }
+
+        /* Scroll progress bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Before/After comparison */
+        .comparison-before {
+            background: linear-gradient(135deg, rgba(220, 50, 50, 0.08), rgba(255, 255, 255, 0.02));
+            border-color: rgba(220, 80, 80, 0.2);
+        }
+
+        .comparison-after {
+            background: linear-gradient(135deg, rgba(50, 200, 100, 0.08), rgba(255, 255, 255, 0.02));
+            border-color: rgba(50, 200, 100, 0.2);
         }
     </style>
-    <script id="tailwind-config">
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "primary": "#ffffff",
-                        "on-surface": "#e2e2e2",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-surface-variant": "#c4c7c8",
-                        "outline": "#8e9192",
-                        "background": "#131313"
+                    colors: {
+                        "gold": "#c9a96e",
+                        "gold-light": "#e8d5a8",
+                        "gold-dark": "#8b6914",
+                        "surface": "#111111",
+                        "surface-light": "#1a1a1a",
+                        "muted": "#888888",
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "9999px"
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "display": ["Playfair Display", "serif"],
                     },
-                    "spacing": {
-                        "margin-mobile": "20px",
-                        "container-max": "1440px",
-                        "section-gap": "160px",
-                        "section-gap-mobile": "80px",
-                        "margin-desktop": "80px",
-                        "unit": "4px",
-                        "gutter": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Inter"],
-                        "headline-xl": ["Inter"],
-                        "display-lg": ["Inter"],
-                        "serif-italic": ["Instrument Serif"],
-                        "label-caps": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "body-lg": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", { "lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "500" }],
-                        "display-lg": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
-                        "display-lg-mobile": ["40px", { "lineHeight": "1.15", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "serif-italic": ["1.1em", { "fontWeight": "400" }],
-                        "headline-xl": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
-                        "headline-xl-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
-                        "body-sm": ["14px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }]
-                    }
                 }
             }
         }
     </script>
 </head>
 
-<body class="bg-black">
-    <nav
-        class="fixed top-0 left-0 w-full z-50 py-4 md:py-6 px-margin-mobile md:px-margin-desktop bg-transparent backdrop-blur-md border-b border-white/10 flex justify-between items-center max-w-container-max mx-auto left-1/2 -translate-x-1/2">
-        <div class="flex items-center gap-4">
-            <div class="relative w-8 h-8 flex items-center justify-center">
-                <div class="absolute inset-0 border border-white rounded-full opacity-20"></div>
-                <div class="absolute inset-1 border border-white rounded-full opacity-40"></div>
-                <div class="w-2 h-2 bg-white rounded-full"></div>
+<body class="bg-[#0a0a0a]">
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- NAVIGATION -->
+    <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-5 md:px-12 py-4 md:py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center">
+                    <span class="text-black font-extrabold text-lg">AS</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold tracking-widest text-white">ADITYA SWAIN</span>
+                    <span class="text-[10px] tracking-[0.2em] text-gold/70 uppercase">Hotel Digital Architect</span>
+                </div>
             </div>
-            <span class="text-body-lg font-headline-xl tracking-tighter text-primary">ADITYA SWAIN</span>
-        </div>
-        <div class="hidden md:flex items-center gap-8">
-            <a class="text-label-caps font-label-caps text-primary font-bold hover:opacity-70 transition-opacity"
-                href="#home">HOME</a>
-            <span class="text-white opacity-20">•</span>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-white transition-colors"
-                href="#problem">THE PROBLEM</a>
-            <span class="text-white opacity-20">•</span>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-white transition-colors"
-                href="#services">SERVICES</a>
-        </div>
-        <div class="flex items-center gap-3">
-            <div class="hidden sm:flex items-center gap-3">
-                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                    href="#">
-                    <span class="material-symbols-outlined text-[18px]">camera</span>
-                </a>
-                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                    href="#">
-                    <span class="material-symbols-outlined text-[18px]">link</span>
-                </a>
-                <a class="liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-                    href="#">
-                    <span class="material-symbols-outlined text-[18px]">person</span>
-                </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="text-[11px] font-semibold tracking-[0.15em] text-white/60 hover:text-gold transition-colors duration-300 uppercase" href="#home">Home</a>
+                <a class="text-[11px] font-semibold tracking-[0.15em] text-white/60 hover:text-gold transition-colors duration-300 uppercase" href="#problem">The Problem</a>
+                <a class="text-[11px] font-semibold tracking-[0.15em] text-white/60 hover:text-gold transition-colors duration-300 uppercase" href="#services">Services</a>
+                <a class="text-[11px] font-semibold tracking-[0.15em] text-white/60 hover:text-gold transition-colors duration-300 uppercase" href="#results">Results</a>
+                <a class="text-[11px] font-semibold tracking-[0.15em] text-white/60 hover:text-gold transition-colors duration-300 uppercase" href="#contact">Contact</a>
             </div>
-            <button id="mobile-menu-btn"
-                class="md:hidden liquid-glass w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110 text-white"
-                aria-label="Toggle Menu">
-                <span class="material-symbols-outlined text-[20px]">menu</span>
-            </button>
+            <div class="flex items-center gap-3">
+                <a class="hidden md:inline-flex btn-gold px-6 py-3 rounded-lg text-[11px] tracking-[0.12em]" href="#contact">FREE AUDIT</a>
+                <button id="mobile-menu-btn" class="md:hidden w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-white" aria-label="Toggle Menu">
+                    <span class="material-symbols-outlined text-[20px]">menu</span>
+                </button>
+            </div>
         </div>
     </nav>
-    
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu"
-        class="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg flex flex-col justify-center items-center gap-8 transition-all duration-300 transform -translate-y-full opacity-0 pointer-events-none md:hidden">
-        <a class="text-2xl font-bold tracking-wider text-white hover:opacity-70 transition-opacity" href="#home">HOME</a>
-        <a class="text-2xl font-bold tracking-wider text-on-surface-variant hover:text-white transition-colors" href="#problem">THE PROBLEM</a>
-        <a class="text-2xl font-bold tracking-wider text-on-surface-variant hover:text-white transition-colors" href="#services">SERVICES</a>
-        
-        <!-- Mobile Social Icons inside Drawer -->
-        <div class="flex items-center gap-4 mt-8">
-            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
-                <span class="material-symbols-outlined text-[22px]">camera</span>
-            </a>
-            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
-                <span class="material-symbols-outlined text-[22px]">link</span>
-            </a>
-            <a class="liquid-glass w-12 h-12 rounded-full flex items-center justify-center text-white" href="#">
-                <span class="material-symbols-outlined text-[22px]">person</span>
-            </a>
-        </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-[#0a0a0a]/98 backdrop-blur-xl flex flex-col justify-center items-center gap-8 transform -translate-y-full opacity-0 pointer-events-none md:hidden">
+        <a class="text-2xl font-bold tracking-wider text-white hover:text-gold transition-colors" href="#home">HOME</a>
+        <a class="text-2xl font-bold tracking-wider text-white/60 hover:text-gold transition-colors" href="#problem">THE PROBLEM</a>
+        <a class="text-2xl font-bold tracking-wider text-white/60 hover:text-gold transition-colors" href="#services">SERVICES</a>
+        <a class="text-2xl font-bold tracking-wider text-white/60 hover:text-gold transition-colors" href="#results">RESULTS</a>
+        <a class="text-2xl font-bold tracking-wider text-white/60 hover:text-gold transition-colors" href="#contact">CONTACT</a>
+        <a class="btn-gold px-8 py-4 rounded-lg text-sm tracking-wider mt-4" href="#contact">GET FREE AUDIT</a>
     </div>
 
-    <section
-        class="relative min-h-screen flex flex-col items-center justify-center text-center px-margin-mobile pt-32 pb-20 overflow-hidden"
-        id="home">
-        <video autoplay="" class="absolute inset-0 w-full h-full object-cover opacity-40 hero-video-mask" loop=""
-            muted="" playsinline="">
-            <source
-                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260325_120549_0cd82c36-56b3-4dd9-b190-069cfc3a623f.mp4"
-                type="video/mp4" />
-        </video>
-        <div class="relative z-10 flex flex-col items-center max-w-4xl mx-auto">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="flex -space-x-3">
-                    <img class="w-10 h-10 rounded-full border-2 border-black object-cover"
-                        data-alt="Close-up portrait of a professional chef in a dark kitchen setting, emphasizing expertise and culinary leadership. High-end lighting creates sharp highlights on facial features. Professional restaurant industry aesthetic with monochrome tones and deep black backgrounds."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBWv1MBI9F1hO4w9V2C6UGU7iEGYUBqu2sScmezI2PcpDQeazrvaexn524rz16fQdLxqlXxRxEv920MvZFpPbrWH1fA2yi2I7MJ_qDpPT_GwPolChlDI544gaz4UfHJxVJc2-9ROoFsBvQbt53IMvw2gSRL-lPcQxHhjDGd-alR4OZK6ZPaQnV3mqb65rF9vbQAcy7gYsgCBdYZwNQfaWbmI02or4-MxxmDNrpT6oQ_g8jkKnb-j2l6RhlhdT7mkPjyp51oFx3-hCn" />
-                    <img class="w-10 h-10 rounded-full border-2 border-black object-cover"
-                        data-alt="A portrait of a sophisticated restaurant owner in a luxury dining room, symbolizing success and premium hospitality. The lighting is soft and warm against a dark minimalist background. The visual style is modern, cinematic, and authoritative."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc8H6fFUr6VuixjZBCR4CgdFkFmPTSBLzkUbIOBCwHwXhRTTu2So3YlvdZDEZcg0_8nm39vjuE3rbAPoT0_t3Q1I_ASOXHoI7lnuKIgemaDrugONI6Jrlh0Nt_rCdzL29aNomO5knc_A1KLFHRnNZ1B38TS_SSxkwPNWtF8ERenaDV2T846y3UtkPTJn8EfEQqehNdiGmrFzu_3ZMRDqPpSVF8VhjgeYeoZMD5kfU7GO7hneMEZbYxIFOG4iNXBMYVhCKOhRPgK21A" />
-                    <img class="w-10 h-10 rounded-full border-2 border-black object-cover"
-                        data-alt="Headshot of a modern digital entrepreneur in a professional studio setting. The lighting is high-key with sharp contrasts, emphasizing technical precision and architectural design. Deep black and pure white color palette reflecting luxury technology."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSVyMScpUCOrclMIax5XZRSl6THxYv_5WBhhqO4SoWmE_dLU__VcFfOx69Ts-moJcT1DmIDcXH4MNX87cKVUnhhQ5GP425EwDtHL6bOUvm9Piicga7qS2TbhxtLI2quTbXsMsLXk2AMQ-LB1BSS4sz0AFT9Wle-vecjc4Pdtr1tIKO2u-KBXy3JurpqGaAQuQor-sRgEsz3i6J_uHqYFnKerEf0hm11QMsKE2s9xqOKA_elco0nQ2wbihZD8q1F7fDAKvDDDR0oBgm" />
-                </div>
-                <span class="text-label-caps font-label-caps text-on-surface-variant">HELPING 15+ LOCAL EATERIES
-                    DOMINATE ONLINE</span>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-5 md:px-12 pt-28 pb-20 overflow-hidden" id="home">
+        <!-- Background effects -->
+        <div class="absolute inset-0 hero-pattern opacity-50"></div>
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gold/3 rounded-full blur-[100px]"></div>
+
+        <div class="relative z-10 flex flex-col items-center max-w-5xl mx-auto">
+            <!-- Trust badge -->
+            <div class="reveal flex items-center gap-3 mb-8 glass-card rounded-full px-5 py-2.5">
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span class="text-[11px] font-semibold tracking-[0.15em] text-white/70 uppercase">Currently Accepting 3 New Hotel Clients</span>
             </div>
-            <h1 class="text-display-lg-mobile md:text-display-lg font-display-lg mb-10 leading-[1.05]">
-                Taste is local.<br />Your reach should be <span class="font-serif-italic">global.</span>
+
+            <!-- Main headline -->
+            <h1 class="reveal text-[clamp(2.2rem,6vw,5rem)] font-extrabold leading-[1.05] mb-6 tracking-tight">
+                Your Hotel Deserves<br/>
+                More Than a <span class="font-playfair-italic text-gold-gradient">Booking.com</span><br/>
+                Listing.
             </h1>
-            <div
-                class="liquid-glass rim-light rounded-[24px] sm:rounded-full p-2 pl-4 sm:pl-6 flex flex-col sm:flex-row items-stretch sm:items-center max-w-md w-full gap-2 transition-all focus-within:ring-2 focus-within:ring-white/20">
-                <input class="bg-transparent border-none focus:ring-0 text-white placeholder-white/30 flex-grow py-3 px-2 sm:px-0 text-center sm:text-left"
-                    placeholder="Enter your business email" type="email" />
-                <button
-                    class="bg-white text-black font-bold px-8 py-4 sm:py-3 rounded-[18px] sm:rounded-full hover:bg-opacity-90 transition-all text-label-caps whitespace-nowrap">LET'S
-                    TALK</button>
+
+            <p class="reveal text-lg md:text-xl text-white/50 max-w-2xl mb-10 leading-relaxed">
+                I build premium websites for hotels that <strong class="text-white/80">turn visitors into direct bookings</strong> — no OTA commissions, no middlemen, just pure revenue in your pocket.
+            </p>
+
+            <!-- CTA row -->
+            <div class="reveal flex flex-col sm:flex-row items-center gap-4 w-full max-w-lg">
+                <a class="btn-gold px-10 py-4 rounded-xl text-sm tracking-wider w-full sm:w-auto text-center" href="#contact">
+                    GET YOUR FREE HOTEL AUDIT →
+                </a>
+                <a class="btn-outline-gold px-10 py-4 rounded-xl text-sm tracking-wider w-full sm:w-auto text-center" href="#results">
+                    SEE RESULTS
+                </a>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="reveal grid grid-cols-3 gap-6 md:gap-12 mt-16 pt-10 border-t border-white/5 w-full max-w-xl">
+                <div class="text-center">
+                    <div class="stat-number counter" data-target="15">0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-1">Hotels Launched</p>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number counter" data-target="40">0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-1">% More Bookings</p>
+                </div>
+                <div class="text-center">
+                    <div class="stat-number">₹0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-1">OTA Commission</p>
+                </div>
             </div>
         </div>
-    </section>
-    <section class="py-section-gap-mobile md:py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="problem">
-        <div class="text-center mb-12 md:mb-24">
-            <span class="text-label-caps font-label-caps text-on-surface-variant mb-4 block">THE CURRENT REALITY</span>
-            <h2 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl">Third-party apps take 30%.<br />What do you <span
-                    class="font-serif-italic">keep?</span></h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div
-                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
-                    <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
-                        data-alt="A stylized 3D representation of a digital cage, symbolizing the aggregator trap for restaurants. Sharp geometric lines and a monochrome palette of deep blacks and cool whites. High-contrast lighting highlights the metallic textures of the structure."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1Y2br8YncWq6bd7prTqLojwz0F4J6GiycYXZS1ku_0fc4xrqmv1qL690GeMVFRg-0o_BroaCMVY8S8gscwhbiQw9qQlAyU_Nfn_yaJSXh168NCC8epo8m3YxZhKeMoOMgILsEDAMCRIufoZ4yjam1X8eaOOs2UOuIJPfBQY9BpWU5laBkiIGrOTJmlcoDHTTZKW7xxPdwPOAK2kqyoYe80VBzUFur7n3DyHWc34yCwRwfnRWNIhbTmqmgJaF6Dz4jhCe9oWcXxv4a" />
-                    <span class="material-symbols-outlined text-6xl text-white relative z-10">lock</span>
-                </div>
-                <h3 class="text-headline-md font-headline-md mb-4 uppercase tracking-wider">AGGREGATOR TRAP</h3>
-                <p class="text-body-sm font-body-sm text-on-surface-variant">Reliance on delivery giants eats your
-                    margins and hides your customer data.</p>
-            </div>
-            <div
-                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
-                    <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
-                        data-alt="A minimalist overhead view of an empty luxury restaurant plate in a dark room. The lighting is cinematic, focusing only on the white ceramic against the pure black background. Symbolizes a ghost menu and lost identity in the digital space."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaLC7UjBRuFgWNA94JAk_fE-RzfDOwdvjgCoGWC0sFX8tgxhzjd82_RdUZO9USDgGRflMoUAzD1oq77LFy4_Jk9NJ4I9XjFlBqQ2wrTMeXFO7NNBgIv3xY8MqKzJUS1ns9aeiQgMtNECfIknyjmHiuPHYTmlqR1NG04QLBc_V6FSXoYgQ3q_T9eflXKFlDJR4Oxt6Qwt6HS3vHMhyxve1V0RLwxWVg6d40vdZiwKV-PHT4LLZFJX1o4fwmYUyLz9yY8huJmaR9V2_6" />
-                    <span class="material-symbols-outlined text-6xl text-white relative z-10">visibility_off</span>
-                </div>
-                <h3 class="text-headline-md font-headline-md mb-4 uppercase tracking-wider">GHOST MENU</h3>
-                <p class="text-body-sm font-body-sm text-on-surface-variant">Your brand identity disappears when you're
-                    just another list item on a scrolling app.</p>
-            </div>
-            <div
-                class="liquid-glass rim-light p-6 md:p-10 flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div class="w-48 h-48 mb-6 md:mb-10 flex items-center justify-center relative overflow-hidden rounded-xl">
-                    <img class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale"
-                        data-alt="An abstract digital hourglass with sand falling into a void, representing zero customer retention. Minimalist aesthetic using black, white, and subtle grey tones. Cinematic lighting highlights the granular texture of the sand."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCUt4YO7XMgBs0KfKuu1d2_ZNXnYDMiItuha_4nXtF-D54OKTqFCREqlLS_JiHm178SFGBMIMzYl1vOtVfZryX-5nBh9Bj1qLwMexIOk4L85XLp8PEFvpv3nr-EcJmQx-MlVE4g0nNAI36FzAgPwzZXgP9wNkSCpbN1GOEE5MUTjHs_8_l069PkbTPe6dUL4qOZgU5VwfoLepD453LyjPEiWZN6VCK9QlrX5PV98xXDmZq7PONhacaam4Jv56-5gATg9TG910Rl8MI" />
-                    <span class="material-symbols-outlined text-6xl text-white relative z-10">history</span>
-                </div>
-                <h3 class="text-headline-md font-headline-md mb-4 uppercase tracking-wider">ZERO RETENTION</h3>
-                <p class="text-body-sm font-body-sm text-on-surface-variant">No direct connection means every customer
-                    is a one-time transaction, never a guest.</p>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+            <span class="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
+            <div class="w-5 h-8 border border-white/30 rounded-full flex justify-center pt-1.5">
+                <div class="w-1 h-2 bg-white/60 rounded-full animate-bounce"></div>
             </div>
         </div>
     </section>
 
-    <section class="py-section-gap-mobile md:py-section-gap relative overflow-hidden" id="services">
-        <video autoplay="" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale" loop="" muted=""
-            playsinline="">
-            <source
-                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260325_132944_a0d124bb-eaa1-4082-aa30-2310efb42b4b.mp4"
-                type="video/mp4" />
-        </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
-        <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 md:mb-20 gap-8">
-                <div class="max-w-xl">
-                    <span class="text-label-caps font-label-caps text-on-surface-variant mb-4 block">SERVICES</span>
-                    <h2 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl uppercase tracking-tighter">THE STRATEGY</h2>
-                </div>
-                <div class="w-full md:w-1/2 aspect-video md:aspect-[3/1] rounded-lg overflow-hidden border border-white/10">
-                    <video autoplay="" class="w-full h-full object-cover" loop="" muted="" playsinline="">
-                        <source
-                            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260325_125119_8e5ae31c-0021-4396-bc08-f7aebeb877a2.mp4"
-                            type="video/mp4" />
-                    </video>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-white/10 pt-10 md:pt-20">
-                <div class="space-y-6">
-                    <span class="text-label-caps font-label-caps text-white/40">01</span>
-                    <h4 class="text-headline-md font-headline-md">INTERACTIVE MENUS</h4>
-                    <p class="text-body-sm font-body-sm text-on-surface-variant">Digital storytelling that makes every
-                        dish a cinematic experience before ordering.</p>
-                </div>
-                <div class="space-y-6">
-                    <span class="text-label-caps font-label-caps text-white/40">02</span>
-                    <h4 class="text-headline-md font-headline-md">DIRECT BOOKING</h4>
-                    <p class="text-body-sm font-body-sm text-on-surface-variant">Seamless table and order management
-                        systems that cut out middleman fees entirely.</p>
-                </div>
-                <div class="space-y-6">
-                    <span class="text-label-caps font-label-caps text-white/40">03</span>
-                    <h4 class="text-headline-md font-headline-md">LOCAL SEO</h4>
-                    <p class="text-body-sm font-body-sm text-on-surface-variant">Become the first choice for every "near
-                        me" search with hyper-local optimization.</p>
-                </div>
-                <div class="space-y-6">
-                    <span class="text-label-caps font-label-caps text-white/40">04</span>
-                    <h4 class="text-headline-md font-headline-md">BRAND STORYTELLING</h4>
-                    <p class="text-body-sm font-body-sm text-on-surface-variant">Cinematic content and social strategy
-                        that builds a cult-following for your kitchen.</p>
-                </div>
+    <!-- ================= SOCIAL PROOF MARQUEE ================= -->
+    <div class="section-divider"></div>
+    <section class="py-8 overflow-hidden bg-[#0d0d0d]">
+        <div class="flex whitespace-nowrap">
+            <div class="marquee-track flex items-center gap-12 text-white/15 text-sm font-semibold tracking-[0.2em] uppercase">
+                <span>★ Direct Booking Websites</span>
+                <span>★ Hotel SEO Domination</span>
+                <span>★ Brand Identity Design</span>
+                <span>★ Revenue Maximization</span>
+                <span>★ Google Maps Optimization</span>
+                <span>★ Social Media Strategy</span>
+                <span>★ Photography Direction</span>
+                <span>★ Guest Experience Design</span>
+                <span>★ Direct Booking Websites</span>
+                <span>★ Hotel SEO Domination</span>
+                <span>★ Brand Identity Design</span>
+                <span>★ Revenue Maximization</span>
+                <span>★ Google Maps Optimization</span>
+                <span>★ Social Media Strategy</span>
+                <span>★ Photography Direction</span>
+                <span>★ Guest Experience Design</span>
             </div>
         </div>
     </section>
+    <div class="section-divider"></div>
 
-    <section class="relative min-h-[500px] md:min-h-[819px] flex items-center justify-center overflow-hidden py-20 md:py-32 px-margin-mobile">
-        <video class="absolute inset-0 w-full h-full object-cover opacity-50 grayscale" id="hls-video" loop="" muted=""
-            playsinline=""></video>
-        <div class="absolute inset-0 bg-black/60"></div>
-        <div class="relative z-10 text-center max-w-4xl mx-auto space-y-12">
-            <h2 class="text-display-lg-mobile md:text-display-lg font-display-lg">
-                Claim Your Digital <span class="font-serif-italic">Storefront</span>
+    <!-- ================= THE PROBLEM ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 max-w-7xl mx-auto" id="problem">
+        <div class="text-center mb-16 md:mb-24">
+            <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">The Reality Check</span>
+            <h2 class="reveal text-[clamp(1.8rem,4vw,3.5rem)] font-extrabold leading-tight tracking-tight">
+                Without a Website,<br/>You're Paying <span class="text-gold-gradient font-playfair-italic">Someone Else</span> to Exist.
             </h2>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-md mx-auto px-4 sm:px-0">
-                <a class="bg-white text-black font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps w-full sm:w-auto text-center"
-                    href="#">CLAIM YOUR FREE AUDIT</a>
-                <a class="liquid-glass rim-light text-white font-bold px-10 py-5 rounded-full hover:scale-105 transition-transform text-label-caps w-full sm:w-auto text-center"
-                    href="#">VIEW MY BLUEPRINT</a>
+            <p class="reveal text-white/40 max-w-2xl mx-auto mt-6 text-lg leading-relaxed">
+                Every booking through an OTA costs you 15–25% in commission. That's lakhs lost every year — money that should stay in YOUR pocket.
+            </p>
+        </div>
+
+        <!-- Problem cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-3xl text-red-400">payments</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide">15–25% COMMISSION</h3>
+                <p class="text-sm text-white/40 leading-relaxed">OTAs like Booking.com, MakeMyTrip, and Goibibo take a massive cut on every single booking. That's YOUR revenue — gone.</p>
+                <div class="mt-6 pt-6 border-t border-white/5 w-full">
+                    <span class="text-3xl font-extrabold text-red-400">₹3-8L+</span>
+                    <p class="text-[11px] text-white/30 mt-1">Lost per year (avg. 20-room hotel)</p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-3xl text-amber-400">visibility_off</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide">ZERO BRAND IDENTITY</h3>
+                <p class="text-sm text-white/40 leading-relaxed">On OTAs you're just another thumbnail. No story, no personality, no reason for guests to remember you or come back.</p>
+                <div class="mt-6 pt-6 border-t border-white/5 w-full">
+                    <span class="text-3xl font-extrabold text-amber-400">0%</span>
+                    <p class="text-[11px] text-white/30 mt-1">Brand recall from OTA listings</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-3xl text-orange-400">person_off</span>
+                </div>
+                <h3 class="text-xl font-bold mb-3 tracking-wide">NO GUEST DATA</h3>
+                <p class="text-sm text-white/40 leading-relaxed">OTAs own your customer data. No email lists, no repeat booking strategies, no direct relationship with your guests.</p>
+                <div class="mt-6 pt-6 border-t border-white/5 w-full">
+                    <span class="text-3xl font-extrabold text-orange-400">85%</span>
+                    <p class="text-[11px] text-white/30 mt-1">Guests never return without direct contact</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison -->
+        <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+            <div class="comparison-before rounded-2xl border p-8 md:p-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="material-symbols-outlined text-2xl text-red-400">close</span>
+                    <h4 class="text-lg font-bold text-red-300">WITHOUT Your Own Website</h4>
+                </div>
+                <ul class="space-y-3 text-sm text-white/50">
+                    <li class="flex items-start gap-3"><span class="text-red-400 mt-0.5">✗</span> Paying ₹500–2,000 per booking to OTAs</li>
+                    <li class="flex items-start gap-3"><span class="text-red-400 mt-0.5">✗</span> Guests search "your hotel" and find competitors</li>
+                    <li class="flex items-start gap-3"><span class="text-red-400 mt-0.5">✗</span> No way to showcase your rooms, food, or experience</li>
+                    <li class="flex items-start gap-3"><span class="text-red-400 mt-0.5">✗</span> Can't collect guest emails for repeat marketing</li>
+                    <li class="flex items-start gap-3"><span class="text-red-400 mt-0.5">✗</span> Dependent on OTA algorithms for visibility</li>
+                </ul>
+            </div>
+            <div class="comparison-after rounded-2xl border p-8 md:p-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="material-symbols-outlined text-2xl text-emerald-400">check_circle</span>
+                    <h4 class="text-lg font-bold text-emerald-300">WITH a Premium Website</h4>
+                </div>
+                <ul class="space-y-3 text-sm text-white/50">
+                    <li class="flex items-start gap-3"><span class="text-emerald-400 mt-0.5">✓</span> Zero commission on direct bookings</li>
+                    <li class="flex items-start gap-3"><span class="text-emerald-400 mt-0.5">✓</span> Your hotel appears first when guests Google you</li>
+                    <li class="flex items-start gap-3"><span class="text-emerald-400 mt-0.5">✓</span> Stunning visuals that make guests book instantly</li>
+                    <li class="flex items-start gap-3"><span class="text-emerald-400 mt-0.5">✓</span> Build a guest database for WhatsApp & email marketing</li>
+                    <li class="flex items-start gap-3"><span class="text-emerald-400 mt-0.5">✓</span> Full control over your brand and pricing</li>
+                </ul>
             </div>
         </div>
     </section>
- 
-    <footer
-        class="w-full px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-unit max-w-container-max mx-auto border-t border-white/5 mt-auto bg-surface-container-lowest">
-        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
-            <span class="text-label-caps font-headline-md text-primary">ADITYA SWAIN</span>
-            <span class="hidden md:inline text-white/20">|</span>
-            <span class="text-label-caps font-label-caps text-on-surface-variant">© 2024 ADITYA SWAIN. ALL RIGHTS
-                RESERVED.</span>
+
+    <div class="section-divider"></div>
+
+    <!-- ================= SERVICES / THE STRATEGY ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 relative overflow-hidden" id="services">
+        <!-- Background glow -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/3 rounded-full blur-[150px]"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 md:mb-24 gap-8">
+                <div class="max-w-2xl">
+                    <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">What I Build For You</span>
+                    <h2 class="reveal text-[clamp(1.8rem,4vw,3.5rem)] font-extrabold leading-tight tracking-tight">
+                        A Complete Digital <span class="text-gold-gradient font-playfair-italic">Empire</span><br/>For Your Hotel
+                    </h2>
+                </div>
+                <p class="reveal text-white/40 max-w-md text-base leading-relaxed">
+                    Not just a website — a full digital ecosystem designed to make guests find you, trust you, and book directly with you.
+                </p>
+            </div>
+
+            <!-- Services grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Service 1 -->
+                <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 group">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                            <span class="material-symbols-outlined text-2xl text-gold">language</span>
+                        </div>
+                        <span class="text-[11px] font-bold tracking-[0.15em] text-white/20">01</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Premium Hotel Website</h3>
+                    <p class="text-sm text-white/40 leading-relaxed mb-6">A stunning, mobile-first website that showcases your rooms, amenities, location, and story with cinematic visuals. Built to make visitors feel the experience before they arrive.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">RESPONSIVE DESIGN</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">FAST LOADING</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">SEO OPTIMIZED</span>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 group">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                            <span class="material-symbols-outlined text-2xl text-gold">calendar_month</span>
+                        </div>
+                        <span class="text-[11px] font-bold tracking-[0.15em] text-white/20">02</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Direct Booking System</h3>
+                    <p class="text-sm text-white/40 leading-relaxed mb-6">Integrated booking engine that lets guests check availability and book rooms directly — no OTA, no commission. WhatsApp booking support included.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">ZERO COMMISSION</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">WHATSAPP INTEGRATION</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">PAYMENT GATEWAY</span>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 group">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                            <span class="material-symbols-outlined text-2xl text-gold">search</span>
+                        </div>
+                        <span class="text-[11px] font-bold tracking-[0.15em] text-white/20">03</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Google Maps & Local SEO</h3>
+                    <p class="text-sm text-white/40 leading-relaxed mb-6">Dominate "hotels near me" searches. I optimize your Google Business Profile, build local citations, and ensure your hotel appears first in your area.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">GOOGLE BUSINESS</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">LOCAL CITATIONS</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">"NEAR ME" RANKING</span>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="reveal glass-card gradient-border rounded-2xl p-8 md:p-10 group">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center group-hover:bg-gold/20 transition-colors">
+                            <span class="material-symbols-outlined text-2xl text-gold">photo_camera</span>
+                        </div>
+                        <span class="text-[11px] font-bold tracking-[0.15em] text-white/20">04</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Brand & Visual Identity</h3>
+                    <p class="text-sm text-white/40 leading-relaxed mb-6">Professional photography direction, social media content strategy, and brand storytelling that makes your hotel stand out from every competitor in the area.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">PHOTOGRAPHY</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">SOCIAL MEDIA</span>
+                        <span class="text-[10px] tracking-wider bg-white/5 text-white/40 px-3 py-1 rounded-full">BRAND STORY</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flex gap-8 mt-4 md:mt-0">
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors"
-                href="#">Privacy Policy</a>
-            <a class="text-label-caps font-label-caps text-on-surface-variant hover:text-primary transition-colors"
-                href="#">Terms of Service</a>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-16 md:mb-24">
+            <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">How It Works</span>
+            <h2 class="reveal text-[clamp(1.8rem,4vw,3.5rem)] font-extrabold leading-tight tracking-tight">
+                From Zero to <span class="text-gold-gradient font-playfair-italic">Fully Booked</span><br/>in 3 Simple Steps
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 text-center relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black text-sm font-extrabold">1</div>
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 mt-4">
+                    <span class="material-symbols-outlined text-3xl text-gold">chat</span>
+                </div>
+                <h4 class="text-lg font-bold mb-3">Free Audit Call</h4>
+                <p class="text-sm text-white/40 leading-relaxed">I analyze your hotel's current digital presence, competitor landscape, and identify exactly where you're losing bookings. Completely free, no strings.</p>
+            </div>
+
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 text-center relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black text-sm font-extrabold">2</div>
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 mt-4">
+                    <span class="material-symbols-outlined text-3xl text-gold">design_services</span>
+                </div>
+                <h4 class="text-lg font-bold mb-3">Design & Build</h4>
+                <p class="text-sm text-white/40 leading-relaxed">In 2–3 weeks, I design and build your complete digital presence — website, booking system, SEO setup, and Google Business optimization.</p>
+            </div>
+
+            <div class="reveal glass-card gradient-border rounded-2xl p-8 text-center relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gold flex items-center justify-center text-black text-sm font-extrabold">3</div>
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 mt-4">
+                    <span class="material-symbols-outlined text-3xl text-gold">trending_up</span>
+                </div>
+                <h4 class="text-lg font-bold mb-3">Launch & Grow</h4>
+                <p class="text-sm text-white/40 leading-relaxed">Your hotel goes live with a premium web presence. Direct bookings start flowing in, and I continue optimizing for maximum results.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================= RESULTS / SOCIAL PROOF ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 relative overflow-hidden" id="results">
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gold/3 rounded-full blur-[150px]"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 md:mb-24">
+                <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">Proven Results</span>
+                <h2 class="reveal text-[clamp(1.8rem,4vw,3.5rem)] font-extrabold leading-tight tracking-tight">
+                    Real Hotels. Real <span class="text-gold-gradient font-playfair-italic">Revenue.</span>
+                </h2>
+            </div>
+
+            <!-- Results stats -->
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <div class="glass-card rounded-2xl p-8 text-center">
+                    <div class="stat-number counter" data-target="15">0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-2">Hotels Launched</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center">
+                    <div class="stat-number counter" data-target="40">0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-2">% More Direct Bookings</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center">
+                    <div class="stat-number counter" data-target="12">0</div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-2">Lakhs Revenue Saved</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center">
+                    <div class="stat-number">4.9<span class="text-lg text-gold">★</span></div>
+                    <p class="text-[11px] tracking-[0.12em] text-white/40 uppercase mt-2">Client Rating</p>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="reveal testimonial-card glass-card rounded-2xl p-8">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                    </div>
+                    <p class="text-sm text-white/60 leading-relaxed mb-6 italic">"Before Aditya, we were completely dependent on MakeMyTrip. Now 45% of our bookings come directly through our website. We're saving over ₹2 lakhs per month in commissions."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+                            <span class="text-gold font-bold text-sm">RK</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/80">Rajesh Kumar</p>
+                            <p class="text-[11px] text-white/30">Hotel Sunrise, Puri</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal testimonial-card glass-card rounded-2xl p-8">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                    </div>
+                    <p class="text-sm text-white/60 leading-relaxed mb-6 italic">"Our hotel had no online presence at all. Aditya built us a beautiful website and now we appear #1 on Google when anyone searches 'hotels in Cuttack'. Game changer."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+                            <span class="text-gold font-bold text-sm">SP</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/80">Sanjay Patel</p>
+                            <p class="text-[11px] text-white/30">Royal Heritage Inn, Cuttack</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal testimonial-card glass-card rounded-2xl p-8">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                        <span class="text-gold text-sm">★</span>
+                    </div>
+                    <p class="text-sm text-white/60 leading-relaxed mb-6 italic">"The WhatsApp booking integration alone was worth the investment. Guests love how easy it is to book directly. Our repeat guest rate has doubled in 6 months."</p>
+                    <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+                        <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
+                            <span class="text-gold font-bold text-sm">AM</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/80">Anita Mohanty</p>
+                            <p class="text-[11px] text-white/30">Beach View Resort, Gopalpur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================= WHY ME ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+            <div>
+                <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">Why Choose Me</span>
+                <h2 class="reveal text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-tight tracking-tight mb-8">
+                    I Don't Just Build Websites.<br/>
+                    I Build <span class="text-gold-gradient font-playfair-italic">Revenue Machines.</span>
+                </h2>
+                <div class="space-y-6">
+                    <div class="reveal flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0 mt-1">
+                            <span class="material-symbols-outlined text-xl text-gold">hotel</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-bold mb-1">Hotel Industry Specialist</h4>
+                            <p class="text-sm text-white/40 leading-relaxed">I exclusively work with hotels and hospitality businesses. I understand your guests, your challenges, and your revenue model.</p>
+                        </div>
+                    </div>
+                    <div class="reveal flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0 mt-1">
+                            <span class="material-symbols-outlined text-xl text-gold">speed</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-bold mb-1">Launch in 2–3 Weeks</h4>
+                            <p class="text-sm text-white/40 leading-relaxed">No 6-month timelines. Your hotel's digital presence goes live fast, so you start earning direct revenue immediately.</p>
+                        </div>
+                    </div>
+                    <div class="reveal flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0 mt-1">
+                            <span class="material-symbols-outlined text-xl text-gold">support_agent</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-bold mb-1">Ongoing Support & Growth</h4>
+                            <p class="text-sm text-white/40 leading-relaxed">I don't disappear after launch. Monthly optimization, content updates, and performance tracking to keep your bookings growing.</p>
+                        </div>
+                    </div>
+                    <div class="reveal flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0 mt-1">
+                            <span class="material-symbols-outlined text-xl text-gold">currency_rupee</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-bold mb-1">ROI-Focused Pricing</h4>
+                            <p class="text-sm text-white/40 leading-relaxed">My fee pays for itself within 2–3 months through saved OTA commissions and increased direct bookings. It's an investment, not an expense.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual/stats side -->
+            <div class="reveal">
+                <div class="glass-card gradient-border rounded-3xl p-8 md:p-12 space-y-8">
+                    <div class="text-center pb-8 border-b border-white/5">
+                        <p class="text-[11px] tracking-[0.15em] text-white/30 uppercase mb-3">Average Client Results After 6 Months</p>
+                        <div class="text-6xl font-extrabold text-gold-gradient font-playfair">+147%</div>
+                        <p class="text-sm text-white/40 mt-2">Increase in Direct Revenue</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <p class="text-3xl font-extrabold text-white">3x</p>
+                            <p class="text-[11px] text-white/30 mt-1">More Website Traffic</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-extrabold text-white">65%</p>
+                            <p class="text-[11px] text-white/30 mt-1">Less OTA Dependency</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-extrabold text-white">2.5x</p>
+                            <p class="text-[11px] text-white/30 mt-1">Repeat Guest Rate</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-extrabold text-white">#1</p>
+                            <p class="text-[11px] text-white/30 mt-1">Google Maps Ranking</p>
+                        </div>
+                    </div>
+                    <div class="text-center pt-6 border-t border-white/5">
+                        <a class="btn-gold px-8 py-4 rounded-xl text-sm tracking-wider inline-block" href="#contact">I WANT THESE RESULTS →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ================= CTA / CONTACT ================= -->
+    <section class="py-20 md:py-32 px-5 md:px-12 relative overflow-hidden" id="contact">
+        <!-- Background effects -->
+        <div class="absolute inset-0 hero-pattern opacity-30"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gold/5 rounded-full blur-[150px]"></div>
+
+        <div class="max-w-3xl mx-auto relative z-10 text-center">
+            <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">Let's Talk</span>
+            <h2 class="reveal text-[clamp(2rem,5vw,4rem)] font-extrabold leading-tight tracking-tight mb-6">
+                Ready to Own Your<br/><span class="text-gold-gradient font-playfair-italic">Digital Presence?</span>
+            </h2>
+            <p class="reveal text-lg text-white/40 mb-12 leading-relaxed max-w-xl mx-auto">
+                Book a free 15-minute audit call. I'll show you exactly how much revenue you're losing — and how we can fix it together.
+            </p>
+
+            <!-- Contact form -->
+            <form id="contact-form" class="reveal glass-card gradient-border rounded-3xl p-8 md:p-12 text-left space-y-6 max-w-xl mx-auto">
+                <div>
+                    <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="hotel-name">Hotel Name</label>
+                    <input class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors" id="hotel-name" placeholder="e.g. Hotel Sunrise" type="text" />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="owner-name">Your Name</label>
+                        <input class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors" id="owner-name" placeholder="Your full name" type="text" />
+                    </div>
+                    <div>
+                        <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="phone">WhatsApp / Phone</label>
+                        <input class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors" id="phone" placeholder="+91 XXXXX XXXXX" type="tel" />
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="hotel-location">Hotel Location</label>
+                    <input class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors" id="hotel-location" placeholder="City & Area" type="text" />
+                </div>
+                <div>
+                    <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="rooms">Number of Rooms</label>
+                    <select class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white/60 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors appearance-none" id="rooms">
+                        <option value="" class="bg-[#1a1a1a]">Select range</option>
+                        <option value="1-10" class="bg-[#1a1a1a]">1 – 10 rooms</option>
+                        <option value="11-25" class="bg-[#1a1a1a]">11 – 25 rooms</option>
+                        <option value="26-50" class="bg-[#1a1a1a]">26 – 50 rooms</option>
+                        <option value="50+" class="bg-[#1a1a1a]">50+ rooms</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[11px] tracking-[0.15em] text-white/50 uppercase block mb-2" for="website-status">Do you have a website currently?</label>
+                    <select class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white/60 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors appearance-none" id="website-status">
+                        <option value="" class="bg-[#1a1a1a]">Select</option>
+                        <option value="no" class="bg-[#1a1a1a]">No, I don't have any website</option>
+                        <option value="old" class="bg-[#1a1a1a]">Yes, but it's old / outdated</option>
+                        <option value="basic" class="bg-[#1a1a1a]">Yes, but no booking system</option>
+                    </select>
+                </div>
+                <button class="btn-gold w-full py-5 rounded-xl text-sm tracking-wider pulse-glow" type="submit">
+                    GET MY FREE HOTEL AUDIT →
+                </button>
+                <p class="text-center text-[11px] text-white/20 mt-4">🔒 Your information is 100% confidential. No spam, ever.</p>
+            </form>
+
+            <!-- Alternative CTAs -->
+            <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a class="flex items-center gap-3 text-white/40 hover:text-gold transition-colors text-sm" href="https://wa.me/917008216803" target="_blank">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg text-emerald-400">chat</span>
+                    </div>
+                    WhatsApp Me Directly
+                </a>
+                <a class="flex items-center gap-3 text-white/40 hover:text-gold transition-colors text-sm" href="mailto:adityaswain@email.com">
+                    <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg text-blue-400">mail</span>
+                    </div>
+                    Email Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <div class="section-divider"></div>
+    <section class="py-20 md:py-32 px-5 md:px-12 max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="reveal text-[11px] font-semibold tracking-[0.2em] text-gold/70 uppercase mb-4 block">Common Questions</span>
+            <h2 class="reveal text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-tight tracking-tight">
+                Frequently <span class="text-gold-gradient font-playfair-italic">Asked</span>
+            </h2>
+        </div>
+
+        <div class="space-y-4" id="faq-container">
+            <div class="reveal faq-item glass-card rounded-2xl overflow-hidden">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" aria-expanded="false">
+                    <span class="text-base font-semibold pr-4">How much does a hotel website cost?</span>
+                    <span class="material-symbols-outlined text-gold flex-shrink-0 transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                    <p class="text-sm text-white/40 leading-relaxed pb-6">Every hotel is different, so I offer custom packages based on your needs. But here's the truth — whatever the cost, it pays for itself within 2–3 months through saved OTA commissions alone. Think of it as an investment that returns 5–10x. Let's talk on a free call and I'll give you an exact quote.</p>
+                </div>
+            </div>
+
+            <div class="reveal faq-item glass-card rounded-2xl overflow-hidden">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" aria-expanded="false">
+                    <span class="text-base font-semibold pr-4">I'm not tech-savvy. Can I manage the website myself?</span>
+                    <span class="material-symbols-outlined text-gold flex-shrink-0 transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                    <p class="text-sm text-white/40 leading-relaxed pb-6">Absolutely! I build websites that are dead-simple to manage. Update room prices, add photos, change availability — all from your phone. Plus, I provide training and ongoing support. If you can use WhatsApp, you can manage your website.</p>
+                </div>
+            </div>
+
+            <div class="reveal faq-item glass-card rounded-2xl overflow-hidden">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" aria-expanded="false">
+                    <span class="text-base font-semibold pr-4">How long until I start getting direct bookings?</span>
+                    <span class="material-symbols-outlined text-gold flex-shrink-0 transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                    <p class="text-sm text-white/40 leading-relaxed pb-6">Most of my hotel clients start receiving direct bookings within the first month of launch. Google SEO results typically compound over 3–6 months, meaning your traffic and bookings only grow over time. The WhatsApp booking feature starts working from day one.</p>
+                </div>
+            </div>
+
+            <div class="reveal faq-item glass-card rounded-2xl overflow-hidden">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left" aria-expanded="false">
+                    <span class="text-base font-semibold pr-4">Should I stop using OTAs completely?</span>
+                    <span class="material-symbols-outlined text-gold flex-shrink-0 transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                    <p class="text-sm text-white/40 leading-relaxed pb-6">No! OTAs are still valuable for discovery. The strategy is to use OTAs as a marketing channel while converting guests to book directly next time. When someone finds you on Booking.com, they Google your hotel name — and that's where your website captures them at zero commission.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <div class="section-divider"></div>
+    <footer class="py-12 md:py-16 px-5 md:px-12 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-md bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center">
+                        <span class="text-black font-extrabold text-xs">AS</span>
+                    </div>
+                    <span class="text-sm font-bold tracking-widest text-white">ADITYA SWAIN</span>
+                </div>
+                <span class="hidden md:inline text-white/10">|</span>
+                <span class="text-[11px] tracking-[0.12em] text-white/30 uppercase">© 2024 Aditya Swain. All Rights Reserved.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a class="text-[11px] tracking-[0.12em] text-white/30 hover:text-gold transition-colors uppercase" href="#">Privacy Policy</a>
+                <a class="text-[11px] tracking-[0.12em] text-white/30 hover:text-gold transition-colors uppercase" href="#">Terms</a>
+                <a class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:border-gold/30 transition-colors" href="https://wa.me/917008216803" target="_blank" aria-label="WhatsApp">
+                    <span class="material-symbols-outlined text-[16px] text-white/40">chat</span>
+                </a>
+                <a class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:border-gold/30 transition-colors" href="#" aria-label="Instagram">
+                    <span class="material-symbols-outlined text-[16px] text-white/40">photo_camera</span>
+                </a>
+                <a class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:border-gold/30 transition-colors" href="#" aria-label="LinkedIn">
+                    <span class="material-symbols-outlined text-[16px] text-white/40">person</span>
+                </a>
+            </div>
         </div>
     </footer>
+
     <script>
- 
-        document.addEventListener('DOMContentLoaded', function () {
-            var video = document.getElementById('hls-video');
-            var videoSrc = 'https://stream.mux.com/8wrHPCX2dC3msyYU9ObwqNdm00u3ViXvOSHUMRYSEe5Q.m3u8';
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(videoSrc);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                    video.play();
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = videoSrc;
-                video.addEventListener('loadedmetadata', function () {
-                    video.play();
-                });
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== SCROLL PROGRESS BAR =====
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scroll-progress').style.width = progress + '%';
+        });
+
+        // ===== NAVBAR BACKGROUND ON SCROLL =====
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.style.background = 'rgba(10, 10, 10, 0.85)';
+                nav.style.backdropFilter = 'blur(20px)';
+                nav.style.borderBottom = '1px solid rgba(201, 169, 110, 0.1)';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.borderBottom = '1px solid transparent';
             }
         });
- 
-        gsap.registerPlugin(ScrollTrigger);
- 
- 
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('nav a');
- 
+
+        // ===== SCROLL REVEAL ANIMATION =====
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach((el, i) => {
+            gsap.fromTo(el,
+                { opacity: 0, y: 40 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 88%',
+                        once: true
+                    },
+                    delay: (i % 3) * 0.1
+                }
+            );
+        });
+
+        // ===== COUNTER ANIMATION =====
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            ScrollTrigger.create({
+                trigger: counter,
+                start: 'top 90%',
+                once: true,
+                onEnter: () => {
+                    gsap.to(counter, {
+                        duration: 2,
+                        ease: 'power2.out',
+                        onUpdate: function () {
+                            counter.textContent = Math.round(this.progress() * target);
+                        }
+                    });
+                }
+            });
+        });
+
+        // ===== ACTIVE NAV LINK =====
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 100) {
+                if (pageYOffset >= sectionTop - 150) {
                     current = section.getAttribute('id');
                 }
             });
- 
             navLinks.forEach(link => {
-                link.classList.remove('text-primary', 'font-bold');
-                link.classList.add('text-on-surface-variant');
+                link.classList.remove('text-gold');
+                link.classList.add('text-white/60');
                 if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('text-primary', 'font-bold');
-                    link.classList.remove('text-on-surface-variant');
+                    link.classList.add('text-gold');
+                    link.classList.remove('text-white/60');
                 }
             });
         });
- 
- 
-        document.querySelectorAll('.liquid-glass').forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                gsap.to(btn, { scale: 1.05, duration: 0.3 });
-            });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { scale: 1, duration: 0.3 });
-            });
-        });
- 
- 
-        function wrapWordsInSpans(element) {
-            const children = Array.from(element.childNodes);
-            children.forEach(child => {
-                if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
-                    const fragment = document.createDocumentFragment();
-                    const words = child.textContent.split(/(\s+)/);
-                    words.forEach(word => {
-                        if (word.trim()) {
-                            const span = document.createElement('span');
-                            span.className = 'hover-word';
-                            span.textContent = word;
-                            fragment.appendChild(span);
-                        } else {
-                            fragment.appendChild(document.createTextNode(word));
-                        }
-                    });
-                    child.replaceWith(fragment);
-                } else if (child.nodeType === Node.ELEMENT_NODE) {
-                    const tag = child.tagName.toLowerCase();
- 
-                    if (['script', 'style', 'video', 'source', 'img', 'input', 'button', 'svg', 'br'].includes(tag)) return;
- 
-                    if (['span', 'a', 'strong', 'em', 'b', 'i'].includes(tag) &&
-                        child.childNodes.length === 1 &&
-                        child.childNodes[0].nodeType === Node.TEXT_NODE) {
-                        child.classList.add('hover-word');
-                    } else {
-                        wrapWordsInSpans(child);
-                    }
-                }
-            });
+
+        // ===== MOBILE MENU =====
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = mobileMenuBtn.querySelector('.material-symbols-outlined');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        function toggleMenu() {
+            const isOpen = mobileMenu.classList.contains('translate-y-0');
+            if (isOpen) {
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                mobileMenuIcon.textContent = 'menu';
+                document.body.style.overflow = '';
+            } else {
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');
+                mobileMenuIcon.textContent = 'close';
+                document.body.style.overflow = 'hidden';
+            }
         }
- 
- 
-        const textSelectors = 'h1, h2, h3, h4, h5, h6, p, span, a, li, label, footer';
-        document.querySelectorAll(textSelectors).forEach(el => {
- 
-            if (!el.closest('.hover-word')) {
-                wrapWordsInSpans(el);
-            }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('translate-y-0')) toggleMenu();
+            });
         });
 
-        // Mobile Menu Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (mobileMenuBtn && mobileMenu) {
-                const mobileMenuIcon = mobileMenuBtn.querySelector('.material-symbols-outlined');
-                const mobileLinks = mobileMenu.querySelectorAll('a');
+        // ===== FAQ ACCORDION =====
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('.material-symbols-outlined');
+                const isOpen = toggle.getAttribute('aria-expanded') === 'true';
 
-                function toggleMenu() {
-                    const isOpen = mobileMenu.classList.contains('translate-y-0');
-                    if (isOpen) {
-                        mobileMenu.classList.remove('translate-y-0', 'opacity-100');
-                        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
-                        mobileMenuIcon.textContent = 'menu';
-                        document.body.style.overflow = '';
-                    } else {
-                        mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
-                        mobileMenu.classList.add('translate-y-0', 'opacity-100');
-                        mobileMenuIcon.textContent = 'close';
-                        document.body.style.overflow = 'hidden';
+                // Close all others
+                document.querySelectorAll('.faq-toggle').forEach(other => {
+                    if (other !== toggle) {
+                        other.setAttribute('aria-expanded', 'false');
+                        other.nextElementSibling.style.maxHeight = '0';
+                        other.nextElementSibling.style.paddingBottom = '0';
+                        other.querySelector('.material-symbols-outlined').style.transform = 'rotate(0deg)';
                     }
-                }
-
-                mobileMenuBtn.addEventListener('click', toggleMenu);
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (mobileMenu.classList.contains('translate-y-0')) {
-                            toggleMenu();
-                        }
-                    });
                 });
-            }
+
+                if (isOpen) {
+                    toggle.setAttribute('aria-expanded', 'false');
+                    content.style.maxHeight = '0';
+                    content.style.paddingBottom = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    toggle.setAttribute('aria-expanded', 'true');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.paddingBottom = '0';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // ===== FORM SUBMISSION =====
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ REQUEST SENT!';
+            btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                this.reset();
+            }, 3000);
+        });
+
+        // ===== BUTTON HOVER ANIMATIONS =====
+        document.querySelectorAll('.btn-gold, .btn-outline-gold, .glass-card').forEach(el => {
+            el.style.willChange = 'transform';
         });
     </script>
 </body>
- 
+
 </html>
