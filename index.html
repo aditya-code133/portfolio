@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Aditya Swain — Software Developer</title>
+  <meta name="title" content="Aditya Swain — Software Developer">
+  <meta name="description" content="Portfolio of Aditya Swain — 3rd-year Computer Science Engineering student focused on Data Structures & Algorithms, C, and Python.">
+  <meta name="author" content="Aditya Swain">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aditya Swain — Software Developer">
+  <meta property="og:description" content="3rd-year CSE student focused on Data Structures & Algorithms, C, and Python.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-blob-1"></div>
+    <div class="aurora-blob-2"></div>
+    <div class="aurora-grid"></div>
+    <div class="cursor-aura" id="cursor-aura"></div>
+  </div>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header role="banner">
+    <nav class="nav-island" aria-label="Main Navigation">
+      <a href="#home" class="brand" aria-label="Aditya Swain Homepage">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>Aditya Swain</span>
+      </a>
+
+      <ul class="nav-links" role="menubar">
+        <li class="nav-item" role="none"><a href="#home" role="menuitem">Home</a></li>
+        <li class="nav-item" role="none"><a href="#about" role="menuitem">About</a></li>
+        <li class="nav-item" role="none"><a href="#skills" role="menuitem">Skills</a></li>
+        <li class="nav-item" role="none"><a href="#projects" role="menuitem">Projects</a></li>
+        <li class="nav-item" role="none"><a href="#education" role="menuitem">Education</a></li>
+        <li class="nav-item" role="none"><a href="#contact" role="menuitem">Contact</a></li>
+      </ul>
+
+      <div class="header-cta">
+        <a href="#contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 13.5px;">Get In Touch</a>
+      </div>
+
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-drawer-menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="mobile-drawer" id="mobile-drawer-menu" role="region" aria-label="Mobile Navigation Drawer">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-primary" style="margin-top: 6px;">Connect With Me</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero-section" id="home" aria-labelledby="hero-name">
+      <div class="wrap">
+        <div class="hero-grid">
+          
+          <div class="hero-text fade-up">
+            <div class="badge-pill">
+              <span class="pill-dot" aria-hidden="true"></span>
+              <span>B.Tech CSE &middot; 3rd Year</span>
+            </div>
+
+            <h1 id="hero-name">
+              <span class="gradient-text">Aditya Swain</span><br>
+              <span class="gradient-accent-text">Aspiring Software Developer</span>
+            </h1>
+
+            <p class="hero-sub">
+              A motivated 3rd-year Computer Science Engineering student with strong DSA fundamentals and knowledge of C and Python, actively developing his programming and software-development skills.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="#projects" class="btn btn-primary">
+                <span>Explore Featured Project</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </a>
+              <a href="#contact" class="btn btn-secondary">
+                <span>Let's Connect</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-terminal fade-up" style="transition-delay: 0.15s;">
+            <div class="terminal-card glow-card">
+              <div class="terminal-topbar">
+                <div class="terminal-dots">
+                  <span class="terminal-dot dot-red"></span>
+                  <span class="terminal-dot dot-yellow"></span>
+                  <span class="terminal-dot dot-green"></span>
+                </div>
+                <div class="terminal-tabs">
+                  <button class="tab-btn active" id="tab-c" type="button">binary_search.c</button>
+                  <button class="tab-btn" id="tab-py" type="button">algorithm.py</button>
+                </div>
+              </div>
+
+              <div class="terminal-body mono" id="terminal-code-body">
+<span class="code-keyword">int</span> <span class="code-fn">binarySearch</span>(<span class="code-type">int</span> arr[], <span class="code-type">int</span> n, <span class="code-type">int</span> target) {
+    <span class="code-type">int</span> low = <span class="code-num">0</span>, high = n - <span class="code-num">1</span>;
+    <span class="code-keyword">while</span> (low &lt;= high) {
+        <span class="code-type">int</span> mid = low + (high - low) / <span class="code-num">2</span>;
+        <span class="code-keyword">if</span> (arr[mid] == target) <span class="code-keyword">return</span> mid;
+        <span class="code-keyword">else if</span> (arr[mid] &lt; target) low = mid + <span class="code-num">1</span>;
+        <span class="code-keyword">else</span> high = mid - <span class="code-num">1</span>;
+    }
+    <span class="code-keyword">return</span> -<span class="code-num">1</span>;
+}
+              </div>
+
+              <div class="terminal-footer">
+                <span class="mono" id="terminal-status" style="color: var(--text-muted);">gcc -O2 binary_search.c &middot; ready</span>
+                <button class="terminal-run-btn" id="terminal-run-trigger" type="button">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>Run DSA Test</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="overlap-section" id="about" aria-labelledby="about-heading">
+      <div class="wrap">
+        <div class="section-header fade-up">
+          <div>
+            <div class="kicker-tag">01 &mdash; About</div>
+            <h2 class="section-title" id="about-heading">Problem Solver from First Principles</h2>
+          </div>
+          <p class="section-desc">Grounded in rigorous computer science principles, clean algorithmic thinking, and methodical implementation.</p>
+        </div>
+
+        <div class="about-bento">
+          <div class="bento-card-main glow-card fade-up">
+            <h3 class="about-headline gradient-text">
+              Building foundational engineering mastery one algorithm at a time.
+            </h3>
+            <div class="about-text">
+              <p>
+                Hi, I'm Aditya Swain, currently pursuing my 3rd year of Computer Science Engineering at Sphitorium Engineering College. I have a genuine fascination with how efficient software runs at scale, starting from low-level memory mechanics in C to algorithmic problem solving in Python.
+              </p>
+              <p>
+                Rather than jumping across shallow frameworks, my focus is dedicated to mastering Data Structures, algorithmic complexity, and writing maintainable, bug-resistant code. I am actively preparing for software engineering internships where I can contribute to high-impact engineering teams.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-card-facts glow-card fade-up" style="transition-delay: 0.1s;">
+            <div>
+              <div class="kicker-tag" style="margin-bottom: 18px;">Snapshot</div>
+              <div class="facts-list">
+                <div class="fact-row">
+                  <span class="fact-label">Academic Status</span>
+                  <span class="fact-value">3rd Year B.Tech CSE</span>
+                </div>
+                <div class="fact-row">
+                  <span class="fact-label">Institution</span>
+                  <span class="fact-value">Sphitorium Engineering College</span>
+                </div>
+                <div class="fact-row">
+                  <span class="fact-label">Core Languages</span>
+                  <span class="fact-value">C, Python</span>
+                </div>
+                <div class="fact-row">
+                  <span class="fact-label">Specialization</span>
+                  <span class="fact-value">DSA &amp; Optimization</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overlap-section" id="skills" aria-labelledby="skills-heading">
+      <div class="wrap">
+        <div class="section-header fade-up">
+          <div>
+            <div class="kicker-tag">02 &mdash; Competencies</div>
+            <h2 class="section-title" id="skills-heading">Technical Stack &amp; Skills</h2>
+          </div>
+          <p class="section-desc">Core competencies I continually exercise and deepen through practice and implementation.</p>
+        </div>
+
+        <div class="skills-container">
+          <div class="skill-category-card glow-card fade-up">
+            <div class="skill-category-title">
+              <div class="category-icon-box" aria-hidden="true">&lt;&gt;</div>
+              <span>Programming Languages</span>
+            </div>
+            
+            <div class="skills-interactive-list">
+              <div class="skill-interactive-item">
+                <div class="skill-tag-badge">C</div>
+                <div class="skill-meta">
+                  <h4>C Language</h4>
+                  <p>Pointer arithmetic, memory allocation (malloc/free), structs, and low-level performance.</p>
+                </div>
+              </div>
+
+              <div class="skill-interactive-item">
+                <div class="skill-tag-badge">Py</div>
+                <div class="skill-meta">
+                  <h4>Python</h4>
+                  <p>Algorithmic logic, scripting, list comprehensions, data structures, and rapid problem prototyping.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-category-card glow-card fade-up" style="transition-delay: 0.1s;">
+            <div class="skill-category-title">
+              <div class="category-icon-box" aria-hidden="true">{ }</div>
+              <span>Computer Science Fundamentals</span>
+            </div>
+
+            <div class="skills-interactive-list">
+              <div class="skill-interactive-item">
+                <div class="skill-tag-badge">DSA</div>
+                <div class="skill-meta">
+                  <h4>Data Structures &amp; Algorithms</h4>
+                  <p>Arrays, Linked Lists, Stacks, Queues, Binary Trees, Graphs, Sorting &amp; Searching.</p>
+                </div>
+              </div>
+
+              <div class="skill-interactive-item">
+                <div class="skill-tag-badge">PS</div>
+                <div class="skill-meta">
+                  <h4>Problem Solving</h4>
+                  <p>Time/space complexity analysis (Big-O), recursion, two-pointers, sliding window patterns.</p>
+                </div>
+              </div>
+
+              <div class="skill-interactive-item">
+                <div class="skill-tag-badge">DEV</div>
+                <div class="skill-meta">
+                  <h4>Software Development Principles</h4>
+                  <p>Modular code design, systematic debugging, unit testing habits, clean syntax.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overlap-section" id="projects" aria-labelledby="projects-heading">
+      <div class="wrap">
+        <div class="section-header fade-up">
+          <div>
+            <div class="kicker-tag">03 &mdash; Projects</div>
+            <h2 class="section-title" id="projects-heading">Featured Project</h2>
+          </div>
+          <p class="section-desc">Live production project from my GitHub repository.</p>
+        </div>
+
+        <div class="minimal-project-container">
+          <article class="minimal-project-card glow-card fade-up" aria-labelledby="geetanjali-title">
+            <div class="project-status-bar" style="margin-bottom: 16px;">
+              <span class="live-production-pill">
+                <span class="live-pulse-dot" aria-hidden="true"></span>
+                Live Production
+              </span>
+              <span class="mono" style="font-size: 12px; color: var(--text-muted);">aditya-code133 / gitanjali-bharpoor</span>
+            </div>
+
+            <h3 id="geetanjali-title" style="font-size: 26px; font-weight: 700; margin-bottom: 6px;">
+              Geetanjali Bharpoor &mdash; Official Website
+            </h3>
+            <div style="font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 14px;">
+              Nutrition &amp; E-Commerce Web Platform
+            </div>
+
+            <p style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 20px;">
+              A responsive, mobile-first website for Geetanjali Bharpoor homemade protein &amp; nutrition products, built with clean zero-dependency vanilla architecture and direct WhatsApp ordering.
+            </p>
+
+            <div class="project-tech-tags" style="margin-bottom: 24px;" aria-label="Technologies used">
+              <span class="project-tech-pill">HTML5</span>
+              <span class="project-tech-pill">CSS3</span>
+              <span class="project-tech-pill">JavaScript</span>
+              <span class="project-tech-pill">Mobile-First</span>
+            </div>
+
+            <div class="showcase-action-row">
+              <a href="https://aditya-code133.github.io/gitanjali-bharpoor/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" title="Visit Live Website">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <span>Live Demo</span>
+              </a>
+
+              <a href="https://github.com/aditya-code133/gitanjali-bharpoor" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="View Source on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub Repo</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="overlap-section" id="education" aria-labelledby="edu-heading">
+      <div class="wrap">
+        <div class="section-header fade-up">
+          <div>
+            <div class="kicker-tag">04 &mdash; Education</div>
+            <h2 class="section-title" id="edu-heading">Academic Journey</h2>
+          </div>
+          <p class="section-desc">Formal undergraduate education in Computer Science Engineering.</p>
+        </div>
+
+        <div class="timeline-deck">
+          <div class="timeline-glow-box glow-card fade-up">
+            <div class="timeline-indicator" aria-hidden="true">
+              <div class="timeline-beacon"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <h3>B.Tech &mdash; Computer Science Engineering</h3>
+              <div class="timeline-college">Sphitorium Engineering College</div>
+              <div class="timeline-badges">
+                <span class="badge-pill" style="font-size: 12px; padding: 4px 10px;">
+                  <span class="pill-dot"></span>
+                  3rd Year &mdash; In Progress
+                </span>
+                <span class="mono" style="font-size: 12px; color: var(--text-muted); align-self: center;">2023 &ndash; 2027</span>
+              </div>
+              <p class="timeline-desc">
+                Coursework and rigorous foundations in Data Structures &amp; Algorithms, Computer Architecture, Operating Systems, Database Management Systems, and Object-Oriented Methodology.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overlap-section contact-section-deck" id="contact" aria-labelledby="contact-main-heading">
+      <div class="wrap">
+        <div class="contact-layout">
+          
+          <div class="contact-lead-side fade-up">
+            <div class="kicker-tag">05 &mdash; Reach Out</div>
+            <h2 id="contact-main-heading">
+              Have an internship or project in mind? Let's connect.
+            </h2>
+            <p>
+              I am actively seeking software development internship opportunities, engineering mentorship, and collaborative coding projects. Send a message through the form or reach out directly.
+            </p>
+
+            <div class="direct-channels-card glow-card">
+              
+              <div class="channel-row">
+                <div class="channel-info">
+                  <span class="channel-type">Direct Email</span>
+                  <a href="mailto:adityaswain.0106@gmail.com" class="channel-link" title="Send email via mailto">
+                    adityaswain.0106@gmail.com
+                  </a>
+                </div>
+                <button type="button" class="copy-mini-btn" data-copy="adityaswain.0106@gmail.com" aria-label="Copy email address to clipboard">
+                  Copy
+                </button>
+              </div>
+
+              <div class="channel-row">
+                <div class="channel-info">
+                  <span class="channel-type">Phone</span>
+                  <a href="tel:+918217293794" class="channel-link" title="Call via tel">
+                    +91 82172 93794
+                  </a>
+                </div>
+                <button type="button" class="copy-mini-btn" data-copy="+918217293794" aria-label="Copy phone number to clipboard">
+                  Copy
+                </button>
+              </div>
+
+              <div class="channel-row">
+                <div class="channel-info">
+                  <span class="channel-type">LinkedIn</span>
+                  <a href="https://www.linkedin.com/in/aditya-swain-a179a83b3/" target="_blank" rel="noopener noreferrer" class="channel-link" title="Connect on LinkedIn">
+                    Aditya Swain
+                  </a>
+                </div>
+                <button type="button" class="copy-mini-btn" data-copy="https://www.linkedin.com/in/aditya-swain-a179a83b3/" aria-label="Copy LinkedIn URL to clipboard">
+                  Copy
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-glass-card fade-up" style="transition-delay: 0.1s;">
+            <div class="form-header-box">
+              <h3>Send a Message</h3>
+              <p>Delivered directly to Aditya's inbox via Formspree.</p>
+            </div>
+
+            <div id="contact-alert" class="form-notification" role="alert" aria-live="polite"></div>
+
+            <form id="contact-form" action="https://formspree.io/f/xoeqlzgw" method="POST" novalidate>
+              
+              <div class="input-group">
+                <label for="form-name" class="input-label">Full Name <span class="req">*</span></label>
+                <input 
+                  type="text" 
+                  id="form-name" 
+                  name="name" 
+                  class="input-field" 
+                  placeholder="e.g. Alex Sharma"
+                  autocomplete="name"
+                  required
+                >
+                <div class="input-err-msg" id="name-error">Please enter your full name (at least 2 characters).</div>
+              </div>
+
+              <div class="input-group">
+                <label for="form-email" class="input-label">Email Address <span class="req">*</span></label>
+                <input 
+                  type="email" 
+                  id="form-email" 
+                  name="email" 
+                  class="input-field" 
+                  placeholder="alex@company.com"
+                  autocomplete="email" 
+                  required
+                >
+                <div class="input-err-msg" id="email-error">Please enter a valid email address.</div>
+              </div>
+
+              <div class="input-group">
+                <label for="form-phone" class="input-label">Mobile Number</label>
+                <input 
+                  type="tel" 
+                  id="form-phone" 
+                  name="phone" 
+                  class="input-field" 
+                  placeholder="e.g. +91 98765 43210"
+                  autocomplete="tel"
+                >
+                <div class="input-err-msg" id="phone-error">Please enter a valid phone number (at least 8 digits).</div>
+              </div>
+
+              <div class="input-group">
+                <label for="form-subject" class="input-label">Subject <span class="req">*</span></label>
+                <input 
+                  type="text" 
+                  id="form-subject" 
+                  name="subject" 
+                  class="input-field" 
+                  placeholder="Internship opportunity, project inquiry, etc."
+                  required
+                >
+                <div class="input-err-msg" id="subject-error">Please enter a subject (minimum 3 characters).</div>
+              </div>
+
+              <div class="input-group">
+                <label for="form-message" class="input-label">Message <span class="req">*</span></label>
+                <textarea 
+                  id="form-message" 
+                  name="message" 
+                  class="input-field" 
+                  placeholder="Write your message here..."
+                  required
+                ></textarea>
+                <div class="input-err-msg" id="message-error">Please enter a message with at least 10 characters.</div>
+              </div>
+
+              <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; padding: 13px; font-size: 15px;">
+                <span class="btn-text">Send Message</span>
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrap">
+      <div class="footer-inner">
+        
+        <div>
+          <div class="brand">
+            <span class="brand-dot" aria-hidden="true"></span>
+            <span>Aditya Swain</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+            3rd-year CSE student focused on Data Structures &amp; Algorithms, C, and Python.
+          </p>
+        </div>
+
+        <nav aria-label="Footer Navigation">
+          <div class="footer-navs">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+
+        <div class="footer-social-deck" aria-label="Social links">
+          <a href="https://github.com/aditya-code133" target="_blank" rel="noopener noreferrer" class="footer-social-pill" title="GitHub — aditya-code133">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/aditya-swain-a179a83b3/" target="_blank" rel="noopener noreferrer" class="footer-social-pill" title="LinkedIn — Aditya Swain">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-baseline">
+        <div>&copy; 2026 Aditya Swain. All rights reserved.</div>
+        <div class="footer-direct-contacts">
+          <a href="mailto:adityaswain.0106@gmail.com">adityaswain.0106@gmail.com</a>
+          <span>&bull;</span>
+          <a href="tel:+918217293794">+91 82172 93794</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
