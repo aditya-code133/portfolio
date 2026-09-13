@@ -19,7 +19,6 @@ portfolio/
 ## Featured Project
 
 - **Geetanjali Bharpoor — Official Website**
-  - Live Website: [aditya-code133.github.io/gitanjali-bharpoor/](https://aditya-code133.github.io/gitanjali-bharpoor/)
   - GitHub Repository: [github.com/aditya-code133/gitanjali-bharpoor](https://github.com/aditya-code133/gitanjali-bharpoor)
   - Pure vanilla frontend platform with direct WhatsApp ordering and mobile-first responsive architecture.
 
