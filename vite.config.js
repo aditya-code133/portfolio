@@ -165,6 +165,7 @@ function devEmailApiPlugin() {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), cloudflare(), devEmailApiPlugin()],
+  base: '/portfolio/',
   server: {
     host: '0.0.0.0',
     port: 3000,
