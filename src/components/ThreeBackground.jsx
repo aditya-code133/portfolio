@@ -1,0 +1,332 @@
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { RAY_VERT, RAY_FRAG } from './shaders.js';
+
+export default function ThreeBackground({ isHeroPage = true }) {
+  const canvasRef = useRef(null);
+  const [isInteractive, setIsInteractive] = useState(false);
+  const isInteractiveRef = useRef(false);
+  const isHeroPageRef = useRef(isHeroPage);
+
+  useEffect(() => {
+    isInteractiveRef.current = isInteractive;
+  }, [isInteractive]);
+
+  useEffect(() => {
+    isHeroPageRef.current = isHeroPage;
+  }, [isHeroPage]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    let renderer, controls;
+    let animationFrameId;
+
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: false,
+        powerPreference: 'high-performance',
+        alpha: false,
+        depth: false,
+        stencil: false,
+      });
+    } catch (e) {
+      console.error('WebGL Initialization Error:', e);
+      return;
+    }
+
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+    renderer.toneMapping = THREE.NoToneMapping;
+
+    // Fullscreen raymarching quad
+    const fsScene = new THREE.Scene();
+    const fsCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    const FIXED_PARAMS = {
+      uSteps: 28, // High-framerate 120 FPS raymarching steps
+      uDin: 2.75,
+      uDout: 36.0,
+      uDopMax: 1.85,
+      uOpNear: 0.90,
+      uOpFar: 0.80,
+      uDiskBright: 1.45,
+      uStarBright: 1.2,
+      uSkyFloor: 0.0,
+      uRotSpeed: 0.28,
+      fov: 44.0,
+    };
+
+    const uniforms = {
+      uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+      uTime: { value: 0 },
+      uCamPos: { value: new THREE.Vector3(0, 1.05, 23.98) },
+      uCamTarget: { value: new THREE.Vector3(0, 0, 0) },
+      uFov: { value: 1 / Math.tan(THREE.MathUtils.degToRad(FIXED_PARAMS.fov) / 2) },
+      uSteps: { value: FIXED_PARAMS.uSteps },
+      uRotSign: { value: 1.0 },
+      uDebug: { value: 0 },
+      uDin: { value: FIXED_PARAMS.uDin },
+      uDout: { value: FIXED_PARAMS.uDout },
+      uDopMax: { value: FIXED_PARAMS.uDopMax },
+      uOpNear: { value: FIXED_PARAMS.uOpNear },
+      uOpFar: { value: FIXED_PARAMS.uOpFar },
+      uDiskBright: { value: FIXED_PARAMS.uDiskBright },
+      uStarBright: { value: FIXED_PARAMS.uStarBright },
+      uSkyFloor: { value: FIXED_PARAMS.uSkyFloor },
+      uRotSpeed: { value: FIXED_PARAMS.uRotSpeed },
+    };
+
+    const fsMat = new THREE.ShaderMaterial({
+      vertexShader: RAY_VERT,
+      fragmentShader: RAY_FRAG,
+      uniforms,
+      depthTest: false,
+      depthWrite: false,
+    });
+    fsScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fsMat));
+
+    // Observer Camera
+    const camera = new THREE.PerspectiveCamera(FIXED_PARAMS.fov, window.innerWidth / window.innerHeight, 0.01, 200);
+    camera.position.set(0, 1.05, 23.98);
+    camera.lookAt(0, 0, 0);
+
+    // OrbitControls for optional interactive double-click exploration
+    controls = new OrbitControls(camera, canvas);
+    controls.target.set(0, 0, 0);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.minDistance = 2.0;
+    controls.maxDistance = 150.0;
+    controls.rotateSpeed = 0.6;
+    controls.zoomSpeed = 0.8;
+    controls.enabled = false;
+
+    // Fast, responsive mouse tracking (zero sluggish delay)
+    let mouseX = 0;
+    let mouseY = 0;
+    let smoothMouseX = 0;
+    let smoothMouseY = 0;
+
+    const handleMouseMove = (event) => {
+      mouseX = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      mouseY = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+    };
+
+    const handleMouseLeave = () => {
+      mouseX = 0;
+      mouseY = 0;
+    };
+
+    const handleScroll = () => {
+      mouseX = 0;
+      mouseY = 0;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Double-click toggle handler
+    const handleDoubleClick = (e) => {
+      const target = e.target;
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.closest('.project-modal-backdrop') ||
+        target.closest('a') ||
+        target.closest('button')
+      ) {
+        return;
+      }
+
+      setIsInteractive((prev) => {
+        const next = !prev;
+        if (next) {
+          canvas.style.pointerEvents = 'auto';
+          canvas.style.zIndex = '9999';
+          canvas.style.cursor = 'grab';
+          document.body.style.userSelect = 'none';
+          controls.enabled = true;
+          controls.target.set(0, 0, 0);
+          controls.update();
+        } else {
+          canvas.style.pointerEvents = 'none';
+          canvas.style.zIndex = '-1';
+          canvas.style.cursor = 'default';
+          document.body.style.userSelect = '';
+          controls.enabled = false;
+          mouseX = 0;
+          mouseY = 0;
+        }
+        return next;
+      });
+    };
+
+    const handlePointerDown = () => {
+      if (isInteractiveRef.current) canvas.style.cursor = 'grabbing';
+    };
+
+    const handlePointerUp = () => {
+      if (isInteractiveRef.current) canvas.style.cursor = 'grab';
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsInteractive(false);
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '-1';
+        canvas.style.cursor = 'default';
+        document.body.style.userSelect = '';
+        controls.enabled = false;
+        mouseX = 0;
+        mouseY = 0;
+      }
+    };
+
+    window.addEventListener('dblclick', handleDoubleClick);
+    window.addEventListener('keydown', handleKeyDown);
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    const _dbSize = new THREE.Vector2();
+    const handleResize = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      // High-performance DPR for steady 120 FPS
+      const dpr = Math.min(window.devicePixelRatio || 1, 0.72);
+
+      renderer.setPixelRatio(dpr);
+      renderer.setSize(w, h, false);
+
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+
+      renderer.getDrawingBufferSize(_dbSize);
+      uniforms.uRes.value.copy(_dbSize);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    const initTime = performance.now();
+
+    // 120 FPS Direct Hardware Render Loop
+    const tick = () => {
+      if (!isHeroPageRef.current) {
+        animationFrameId = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const isHeroVisible = window.scrollY < window.innerHeight * 1.05;
+      if (!isHeroVisible && !isInteractiveRef.current) {
+        animationFrameId = window.requestAnimationFrame(tick);
+        return;
+      }
+
+      const now = performance.now();
+      const elapsedTime = (now - initTime) * 0.001;
+
+      if (isInteractiveRef.current) {
+        controls.update();
+      } else {
+        // Snappy, agile parallax response without sluggish dragging
+        smoothMouseX += (mouseX - smoothMouseX) * 0.14;
+        smoothMouseY += (mouseY - smoothMouseY) * 0.14;
+
+        const radius = 24.0;
+        const curAzimuth = smoothMouseX * 0.04;
+        const baseInc = THREE.MathUtils.degToRad(2.5);
+        const curInclination = THREE.MathUtils.clamp(baseInc - smoothMouseY * 0.03, 0.01, 0.16);
+
+        const targetX = radius * Math.cos(curInclination) * Math.sin(curAzimuth);
+        const targetY = radius * Math.sin(curInclination);
+        const targetZ = radius * Math.cos(curInclination) * Math.cos(curAzimuth);
+
+        camera.position.x += (targetX - camera.position.x) * 0.14;
+        camera.position.y += (targetY - camera.position.y) * 0.14;
+        camera.position.z += (targetZ - camera.position.z) * 0.14;
+
+        camera.lookAt(0, 0, 0);
+      }
+
+      uniforms.uTime.value = elapsedTime;
+      uniforms.uCamPos.value.copy(camera.position);
+      uniforms.uCamTarget.value.set(0, 0, 0);
+
+      // Direct, zero-buffer hardware draw for instant 120 FPS
+      renderer.render(fsScene, fsCam);
+
+      animationFrameId = window.requestAnimationFrame(tick);
+    };
+
+    tick();
+
+    // WebGL Context Loss Handlers
+    const handleContextLost = (e) => {
+      e.preventDefault();
+      cancelAnimationFrame(animationFrameId);
+    };
+    const handleContextRestored = () => {
+      handleResize();
+      tick();
+    };
+
+    canvas.addEventListener('webglcontextlost', handleContextLost, false);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('dblclick', handleDoubleClick);
+      window.removeEventListener('keydown', handleKeyDown);
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('resize', handleResize);
+      canvas.removeEventListener('webglcontextlost', handleContextLost);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+      window.cancelAnimationFrame(animationFrameId);
+      if (controls) controls.dispose();
+      if (renderer) renderer.dispose();
+    };
+  }, []);
+
+  return (
+    <div
+      className={`three-hero-bg-wrapper ${isHeroPage ? 'hero-visible' : 'hero-hidden'}${isInteractive ? ' orbit-active' : ''}`}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: isInteractive ? 9999 : -1,
+        pointerEvents: isHeroPage ? (isInteractive ? 'auto' : 'none') : 'none',
+        opacity: isHeroPage ? 1 : 0,
+        visibility: isHeroPage ? 'visible' : 'hidden',
+      }}
+    >
+      <canvas
+        id="webgl-canvas"
+        ref={canvasRef}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          imageRendering: 'auto',
+        }}
+      />
+      <div className={`bg-overlay${isInteractive ? ' orbit-active' : ''}`} />
+
+      {isInteractive && (
+        <div className="orbit-mode-badge" role="status" aria-live="polite">
+          <span className="badge-title">✦ 3D ORBIT ACTIVE</span>
+          <span className="badge-hint">DRAG TO ROTATE · SCROLL TO ZOOM · DOUBLE-CLICK OR ESC TO EXIT</span>
+        </div>
+      )}
+    </div>
+  );
+}
