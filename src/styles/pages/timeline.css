@@ -1,20 +1,23 @@
 /* ==========================================================================
-   Timeline — Horizontal Pinned Scroll Section
-   Vertical scroll drives horizontal card slide (GSAP ScrollTrigger)
+   Timeline — Horizontal Pinned Scroll
+   GSAP ScrollTrigger pins .tl-outer and drives .tl-inner sideways
    ========================================================================== */
 
-/* ── Outer section: full viewport height, no overflow clipping ── */
-.tl-section {
+/* ── Outer pin target: full viewport, no padding override from section rule ── */
+.tl-outer {
   position: relative;
   width: 100%;
-  height: 100vh;           /* pinned to viewport during scroll */
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   z-index: 10;
+  /* Override the global section { padding: 8rem 0 } – this is a div so not needed,
+     but kept here for safety in case someone wraps it */
+  padding: 0 !important;
 }
 
-/* ── Header ── */
+/* ── Header row ── */
 .tl-header {
   display: flex;
   justify-content: space-between;
@@ -42,7 +45,7 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #ffffff;
+  color: #fff;
   letter-spacing: 0.08em;
   font-weight: 600;
 }
@@ -56,14 +59,14 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 8px #ffffff;
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
   animation: radarPulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes radarPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
+  0%, 100% { transform: scale(1);   opacity: 1;   }
   50%       { transform: scale(1.6); opacity: 0.4; }
 }
 
@@ -81,7 +84,7 @@
 .tl-dot {
   background: transparent;
   border: 1px solid transparent;
-  color: #666666;
+  color: #666;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.25rem 0.65rem;
@@ -93,55 +96,51 @@
 }
 
 .tl-dot:hover {
-  color: #ffffff;
+  color: #fff;
   background: rgba(255, 255, 255, 0.08);
 }
 
-.tl-dot.is-active {
-  background: #ffffff;
-  color: #050505;
+.tl-dot--active {
+  background: #fff !important;
+  color: #050505 !important;
   box-shadow: 0 0 14px rgba(255, 255, 255, 0.45);
 }
 
-/* ── Viewport: the visible window for the cards ── */
+/* ── The visible window that clips the scrolling inner track ── */
 .tl-viewport {
   flex: 1;
   overflow: hidden;
   position: relative;
-  display: flex;
-  align-items: stretch;
 }
 
-/* ── Track: all cards laid out horizontally, driven by GSAP x transform ── */
-.tl-track {
+/* ── Inner: all cards laid out side by side, driven by GSAP x ── */
+.tl-inner {
   display: flex;
   flex-direction: row;
   height: 100%;
   will-change: transform;
 }
 
-/* ── Each card slide: exactly one viewport wide ── */
-.tl-card-slide {
+/* ── Each card is exactly one viewport wide ── */
+.tl-card-wrap {
   flex: 0 0 100vw;
   width: 100vw;
   height: 100%;
   display: flex;
   align-items: center;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 }
 
-/* ── Inner wrapper respects container padding ── */
-.tl-card-inner {
+.tl-card-container {
   width: 100%;
 }
 
-/* ── The actual card (split pane) ── */
+/* ── Split-pane card ── */
 .tl-stage-card {
-  position: relative;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 2.2rem;
-  background: rgba(12, 12, 16, 0.88);
+  background: rgba(12, 12, 16, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 16px;
   padding: 2.4rem 2.6rem;
@@ -151,7 +150,7 @@
     0 24px 60px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
-  max-height: calc(100vh - 220px);
+  max-height: calc(100vh - 200px);
   overflow: hidden;
 }
 
@@ -163,7 +162,7 @@
     inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-/* ── Left narrative pane ── */
+/* ── Left pane ── */
 .tl-narrative {
   display: flex;
   flex-direction: column;
@@ -171,10 +170,8 @@
   overflow: hidden;
 }
 
-/* ── Right visual pane ── */
+/* ── Right pane ── */
 .tl-visual-pane {
-  display: flex;
-  flex-direction: column;
   background: radial-gradient(circle at 50% 50%, rgba(18, 20, 32, 0.75) 0%, rgba(6, 7, 12, 0.95) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
@@ -185,10 +182,8 @@
 }
 
 .terminal-canvas-wrapper {
-  flex: 1;
   width: 100%;
   height: 100%;
-  position: relative;
   min-height: 280px;
   display: flex;
   align-items: center;
@@ -201,17 +196,17 @@
   display: block;
 }
 
-/* ── Scroll hint at bottom ── */
+/* ── Scroll hint ── */
 .tl-scroll-hint {
   position: absolute;
-  bottom: 1.25rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.72rem;
-  color: #555555;
+  font-size: 0.7rem;
+  color: #444;
   letter-spacing: 0.1em;
   pointer-events: none;
   white-space: nowrap;
@@ -223,16 +218,16 @@
 }
 
 @keyframes hintFade {
-  0%, 100% { opacity: 0.3; }
-  50%       { opacity: 0.7; }
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 0.6; }
 }
 
 @keyframes hintSlide {
-  0%, 100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0);  }
   50%       { transform: translateX(6px); }
 }
 
-/* ── Card internals (reuse existing styles) ── */
+/* ── Card internals ── */
 .stage-topbar {
   display: flex;
   align-items: center;
@@ -259,25 +254,23 @@
 
 .stage-date {
   font-size: 0.72rem;
-  color: #aaaaaa;
+  color: #aaa;
   letter-spacing: 0.06em;
 }
 
 .stage-step-tag {
   font-size: 0.72rem;
-  color: #666666;
+  color: #666;
   letter-spacing: 0.08em;
 }
 
-.stage-title-wrap {
-  margin-bottom: 1rem;
-}
+.stage-title-wrap { margin-bottom: 1rem; }
 
 .stage-title {
   font-size: 1.55rem;
   font-weight: 800;
   line-height: 1.25;
-  color: #ffffff;
+  color: #fff;
   letter-spacing: -0.01em;
   margin-bottom: 0.35rem;
 }
@@ -285,7 +278,7 @@
 .stage-headline {
   font-size: 0.78rem;
   letter-spacing: 0.06em;
-  color: #888888;
+  color: #888;
 }
 
 .stage-summary {
@@ -312,39 +305,22 @@
   gap: 0.2rem;
 }
 
-.metric-lbl {
-  font-size: 0.62rem;
-  color: #777777;
-  letter-spacing: 0.06em;
-}
+.metric-lbl { font-size: 0.62rem; color: #777; letter-spacing: 0.06em; }
+.metric-val { font-size: 0.8rem;  font-weight: 700; color: #fff; }
 
-.metric-val {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-.stage-tech-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
+.stage-tech-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 
 .stage-pill {
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
   background: rgba(5, 5, 5, 0.45);
-  border: 1px solid #222222;
+  border: 1px solid #222;
   font-size: 0.72rem;
-  color: #888888;
+  color: #888;
   transition: all 0.3s ease;
 }
 
-.stage-pill:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.35);
-}
+.stage-pill:hover { color: #fff; border-color: rgba(255, 255, 255, 0.35); }
 
 /* ── Responsive ── */
 @media (max-width: 960px) {
@@ -352,21 +328,13 @@
     grid-template-columns: 1fr;
     gap: 1.5rem;
     padding: 1.6rem;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 180px);
     overflow-y: auto;
   }
 
-  .tl-visual-pane {
-    min-height: 200px;
-  }
-
-  .terminal-canvas-wrapper {
-    min-height: 200px;
-  }
-
-  .stage-title {
-    font-size: 1.3rem;
-  }
+  .tl-visual-pane { min-height: 200px; }
+  .terminal-canvas-wrapper { min-height: 200px; }
+  .stage-title { font-size: 1.3rem; }
 }
 
 @media (max-width: 640px) {
@@ -376,8 +344,5 @@
     gap: 1rem;
     padding-top: 2rem;
   }
-
-  .stage-metrics-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  .stage-metrics-grid { grid-template-columns: 1fr 1fr; }
 }

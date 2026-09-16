@@ -80,112 +80,73 @@ const epochs = [
 
 export default function Timeline() {
   const { playClickSound } = useAudio();
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
-  const activeRef = useRef(0);
+  const outerRef = useRef(null);
+  const innerRef = useRef(null);
   const dotsRef = useRef([]);
   const pillRef = useRef(null);
+  const activeIdxRef = useRef(0);
+
+  const setActive = (idx) => {
+    activeIdxRef.current = idx;
+    dotsRef.current.forEach((el, i) => {
+      if (!el) return;
+      el.classList.toggle('tl-dot--active', i === idx);
+    });
+    if (pillRef.current) {
+      pillRef.current.textContent = `STAGE 0${idx + 1}/04`;
+    }
+  };
 
   useEffect(() => {
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
+    const outer = outerRef.current;
+    const inner = innerRef.current;
+    if (!outer || !inner) return;
 
-    const cards = track.querySelectorAll('.tl-card-slide');
-    const totalCards = cards.length;
+    // Total scroll distance = (cards - 1) widths
+    const scrollDist = () => inner.scrollWidth - outer.offsetWidth;
 
-    // Total horizontal distance to scroll = (n-1) card widths
-    const getScrollWidth = () => track.scrollWidth - track.offsetWidth;
-
-    // Update active dot indicator
-    const setActive = (idx) => {
-      activeRef.current = idx;
-      dotsRef.current.forEach((el, i) => {
-        if (!el) return;
-        el.classList.toggle('is-active', i === idx);
-      });
-      if (pillRef.current) {
-        pillRef.current.textContent = `STAGE 0${idx + 1}/0${totalCards}`;
-      }
-    };
-
-    // Pin section and drive horizontal scroll on vertical scroll
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: section,
+          trigger: outer,
           start: 'top top',
-          // Each card takes 100vh of scroll distance
-          end: () => `+=${(totalCards - 1) * window.innerHeight}`,
-          scrub: 0.6,
+          end: () => `+=${scrollDist()}`,
+          scrub: 0.8,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            // Map 0→1 progress to card index
-            const raw = self.progress * (totalCards - 1);
-            const idx = Math.round(raw);
-            if (idx !== activeRef.current) {
-              setActive(idx);
-            }
+          onUpdate(self) {
+            const idx = Math.round(self.progress * (epochs.length - 1));
+            if (idx !== activeIdxRef.current) setActive(idx);
           },
         },
       });
 
-      tl.to(track, {
-        x: () => -getScrollWidth(),
+      tl.to(inner, {
+        x: () => -scrollDist(),
         ease: 'none',
       });
-
-      // Card entrance animations keyed to scroll progress
-      cards.forEach((card, i) => {
-        const content = card.querySelector('.tl-card-inner');
-        if (!content) return;
-        gsap.fromTo(
-          content,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: () => `top+=${i * window.innerHeight * 0.85} top`,
-              end: () => `top+=${i * window.innerHeight * 0.85 + 200} top`,
-              scrub: false,
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      });
-    }, section);
+    }, outer);
 
     setActive(0);
-
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="tl-section"
-      id="experience"
-    >
-      {/* ── Header ── */}
+    /* Use a div, not section — section tag gets forced global padding */
+    <div className="tl-outer" ref={outerRef} id="experience">
+      {/* ─── Header ─── */}
       <div className="tl-header container">
         <div className="gsap-reveal">
           <MaskedTitle text="Engineering Journey" />
         </div>
 
         <div className="tl-header-right font-mono">
-          {/* Live pill */}
           <div className="tl-meta-pill">
             <span className="meta-pulse-dot" />
             <span ref={pillRef} className="tl-pill-text">STAGE 01/04</span>
           </div>
 
-          {/* Dot nav */}
           <div className="tl-dot-strip">
             {epochs.map((ep, i) => (
               <button
@@ -196,12 +157,13 @@ export default function Timeline() {
                 aria-label={`Stage 0${i + 1}`}
                 onClick={() => {
                   playClickSound();
-                  // Scroll to the appropriate position
-                  const section = sectionRef.current;
-                  if (!section) return;
-                  const rect = section.getBoundingClientRect();
-                  const top = window.scrollY + rect.top + i * window.innerHeight;
-                  window.scrollTo({ top, behavior: 'smooth' });
+                  const outer = outerRef.current;
+                  if (!outer) return;
+                  const top = outer.getBoundingClientRect().top + window.scrollY;
+                  const dist = (outerRef.current.querySelector('.tl-inner')?.scrollWidth || 0)
+                    - (outerRef.current.offsetWidth || window.innerWidth);
+                  const perCard = dist / (epochs.length - 1);
+                  window.scrollTo({ top: top + i * perCard, behavior: 'smooth' });
                 }}
               >
                 0{i + 1}
@@ -211,14 +173,14 @@ export default function Timeline() {
         </div>
       </div>
 
-      {/* ── Horizontal track ── */}
+      {/* ─── Horizontal scrolling viewport ─── */}
       <div className="tl-viewport">
-        <div ref={trackRef} className="tl-track">
+        <div className="tl-inner" ref={innerRef}>
           {epochs.map((item) => {
             const Visualizer = item.Visualizer;
             return (
-              <div key={item.epoch} className="tl-card-slide">
-                <div className="tl-card-inner container">
+              <div key={item.epoch} className="tl-card-wrap">
+                <div className="container tl-card-container">
                   <div className="tl-stage-card hoverable">
                     {/* Left pane */}
                     <div className="tl-narrative">
@@ -267,11 +229,11 @@ export default function Timeline() {
         </div>
       </div>
 
-      {/* ── Scroll hint ── */}
-      <div className="tl-scroll-hint font-mono">
+      {/* scroll hint */}
+      <div className="tl-scroll-hint font-mono" aria-hidden="true">
         <span>scroll to explore</span>
         <span className="tl-hint-arrow">→</span>
       </div>
-    </section>
+    </div>
   );
 }
