@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAudio } from '../hooks/useAudio';
 import { WebArchitectureCanvas } from './TimelineVisualizers';
 import MaskedTitle from './MaskedTitle';
@@ -7,6 +7,10 @@ export default function Timeline() {
   const { playHoverSound, playClickSound } = useAudio();
   const [activeEpochIndex, setActiveEpochIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [interactionKey, setInteractionKey] = useState(0);
+
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const epochs = [
     {
@@ -86,18 +90,32 @@ export default function Timeline() {
   const handleNext = useCallback(() => {
     playClickSound();
     setActiveEpochIndex((prev) => (prev + 1) % epochs.length);
+    setInteractionKey((k) => k + 1);
   }, [epochs.length, playClickSound]);
 
   const handlePrev = useCallback(() => {
     playClickSound();
     setActiveEpochIndex((prev) => (prev - 1 + epochs.length) % epochs.length);
+    setInteractionKey((k) => k + 1);
   }, [epochs.length, playClickSound]);
 
   const goToEpoch = useCallback((targetIndex) => {
     if (targetIndex < 0 || targetIndex >= epochs.length) return;
     playClickSound();
     setActiveEpochIndex(targetIndex);
+    setInteractionKey((k) => k + 1);
   }, [epochs.length, playClickSound]);
+
+  // Automatic card change effect: cycles smoothly every 4.5s, pauses when hovering or interactive
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveEpochIndex((prev) => (prev + 1) % epochs.length);
+    }, 4500);
+
+    return () => clearInterval(timer);
+  }, [isPaused, interactionKey, epochs.length]);
 
   // Keyboard Arrow navigation
   useEffect(() => {
@@ -109,6 +127,26 @@ export default function Timeline() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext, handlePrev]);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    setIsPaused(false);
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 50) {
+      handleNext();
+    } else if (diff < -50) {
+      handlePrev();
+    }
+  };
 
   return (
     <section className="container timeline-section" id="experience">
@@ -144,6 +182,9 @@ export default function Timeline() {
         className="timeline-stage-wrapper"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <button
           type="button"
