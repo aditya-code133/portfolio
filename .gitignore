@@ -23,9 +23,18 @@ dist-ssr
 *.sln
 *.sw?
 
-# wrangler files
+# Wrangler / Cloudflare
 .wrangler
 .dev.vars*
 !.dev.vars.example
 .env*
 !.env.example
+
+# Build artifacts & deploy scripts
+.vite
+deploy.bat
+deploy_pages.bat
+*.bat
+commitmsg.txt
+.nojekyll
+.assetsignore
