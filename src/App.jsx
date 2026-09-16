@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Core shell components
 import Preloader from './components/Preloader';
@@ -17,7 +17,7 @@ export default function App() {
   );
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/* High-tech preloader (runs once per session) */}
       <Preloader onLoaded={() => setIsPreloaderDone(true)} />
 
@@ -31,6 +31,6 @@ export default function App() {
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
