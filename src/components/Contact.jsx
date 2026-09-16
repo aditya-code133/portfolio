@@ -91,25 +91,34 @@ export default function Contact() {
     setLaunchProgress(0);
     setStatusMsg('');
 
-    // Dispatch real backend email transmission via Resend
-    const sendPromise = fetch('/api/send-email', {
+const WEB3FORMS_ACCESS_KEY =
+  import.meta.env.VITE_WEB3FORMS_KEY || '7bf1a052-1d39-4a74-b8e7-0151db67ca1a';
+
+    // Dispatch real email transmission via Web3Forms directly to user's Gmail
+    const sendPromise = fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
       body: JSON.stringify({
-        senderName: formData.senderName,
-        senderEmail: formData.senderEmail,
-        senderMessage: formData.senderMessage,
+        access_key: WEB3FORMS_ACCESS_KEY,
+        name: formData.senderName.trim(),
+        email: formData.senderEmail.trim() || 'no-reply@portfolio.dev',
+        message: formData.senderMessage.trim(),
+        subject: `[Portfolio Inquiry] ${formData.senderName.trim()}`,
+        from_name: `${formData.senderName.trim()} (Portfolio)`,
       }),
     })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          throw new Error(data?.error || 'Email dispatch failed.');
+        if (!res.ok || data.success === false) {
+          throw new Error(data?.message || 'Email dispatch failed.');
         }
         return data;
       })
       .catch((err) => {
-        console.error('Backend email delivery error:', err);
+        console.error('Web3Forms email delivery error:', err);
         throw err;
       });
 
