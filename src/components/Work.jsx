@@ -1,51 +1,56 @@
+import { useAudio } from '../hooks/useAudio';
 import MaskedTitle from './MaskedTitle';
 
+const projects = [
+  {
+    id: '01',
+    category: 'ON GOING',
+    title: 'FUTURE PROJECT',
+    bgClass: 'bg-1',
+  },
+  {
+    id: '02',
+    category: 'ON GOING',
+    title: 'FUTURE PROJECT',
+    bgClass: 'bg-2',
+  },
+  {
+    id: '03',
+    category: 'ON GOING',
+    title: 'FUTURE PROJECT',
+    bgClass: 'bg-3',
+  },
+];
+
 export default function Work() {
+  const { playHoverSound } = useAudio();
+
   return (
     <section id="work" className="container work-page-section">
       <div className="gsap-reveal work-header">
         <MaskedTitle number="2." text="Featured Work" />
+        <div className="divider" />
       </div>
 
       <div className="work-grid">
-        {/* Slot 01: Future Project Box */}
-        <div className="project-card project-card-future gsap-work-card">
-          <div className="future-card-content">
-            <div className="future-card-badge font-mono">SLOT 01 • AVAILABLE</div>
-            <div className="future-card-icon">+</div>
-            <h3 className="future-card-title font-mono uppercase">Future Project</h3>
-            <p className="future-card-desc text-gray">
-              Reserved for upcoming full-stack web application, software engineering build, or system architecture project.
-            </p>
-            <span className="future-card-status font-mono">● In Planning Phase</span>
+        {projects.map((project, index) => (
+          <div
+            key={index}
+            className="project-card hoverable gsap-work-card"
+            onMouseEnter={playHoverSound}
+          >
+            <div className={`project-bg ${project.bgClass}`} />
+            <div className="project-overlay" />
+            <div className="project-info">
+              <p className="font-mono project-category text-gray uppercase">
+                {project.category}
+              </p>
+              <h3 className="project-title text-glow uppercase">
+                {project.title}
+              </h3>
+            </div>
           </div>
-        </div>
-
-        {/* Slot 02: Future Project Box */}
-        <div className="project-card project-card-future gsap-work-card">
-          <div className="future-card-content">
-            <div className="future-card-badge font-mono">SLOT 02 • AVAILABLE</div>
-            <div className="future-card-icon">+</div>
-            <h3 className="future-card-title font-mono uppercase">Future Project</h3>
-            <p className="future-card-desc text-gray">
-              Reserved for upcoming distributed systems, cloud platform, or backend API service.
-            </p>
-            <span className="future-card-status font-mono">● In Architecture Phase</span>
-          </div>
-        </div>
-
-        {/* Slot 03: Future Project Box */}
-        <div className="project-card project-card-future gsap-work-card">
-          <div className="future-card-content">
-            <div className="future-card-badge font-mono">SLOT 03 • AVAILABLE</div>
-            <div className="future-card-icon">+</div>
-            <h3 className="future-card-title font-mono uppercase">Future Project</h3>
-            <p className="future-card-desc text-gray">
-              Reserved for upcoming algorithmic system, AI/ML integration, or data engineering project.
-            </p>
-            <span className="future-card-status font-mono">● In Research Phase</span>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
