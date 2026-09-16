@@ -91,19 +91,20 @@ export default function Navbar({ isHeroPage }) {
     };
   }, [isHeroPage]);
 
+  const resumeUrl = `${import.meta.env.BASE_URL}Aditya_Swain_Resume.pdf`;
+
   const onResumeClick = (e) => {
     e.preventDefault();
-    const href = '/Aditya_Swain_Resume.pdf';
     try {
       const a = document.createElement('a');
-      a.href = href;
+      a.href = resumeUrl;
       a.download = 'Aditya_Swain_Resume.pdf';
       a.target = '_self';
       document.body.appendChild(a);
       a.click();
       a.remove();
     } catch {
-      window.open(href, '_blank', 'noopener,noreferrer');
+      window.open(resumeUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -151,7 +152,7 @@ export default function Navbar({ isHeroPage }) {
         }}
       >
         <a
-          href="/Aditya_Swain_Resume.pdf"
+          href={resumeUrl}
           onClick={(e) => { onResumeClick(e); playClickSound(); }}
           onMouseEnter={playHoverSound}
           className="nav-link hoverable font-mono uppercase text-glow"
@@ -203,7 +204,7 @@ export default function Navbar({ isHeroPage }) {
             {/* Desktop Resume link */}
             {!isHeroPage && (
               <a
-                href="/Aditya_Swain_Resume.pdf"
+                href={resumeUrl}
                 onClick={(e) => { onResumeClick(e); playClickSound(); }}
                 onMouseEnter={playHoverSound}
                 className="nav-link hoverable font-mono uppercase text-glow desktop-resume-link"
@@ -278,7 +279,7 @@ export default function Navbar({ isHeroPage }) {
 
         <div className="mobile-drawer-footer font-mono">
           <a
-            href="/Aditya_Swain_Resume.pdf"
+            href={resumeUrl}
             onClick={(e) => {
               onResumeClick(e);
               playClickSound();
