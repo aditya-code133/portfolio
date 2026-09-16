@@ -249,6 +249,51 @@
   justify-content: center;
 }
 
+.contact-actions-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contact-actions-row .stellar-transmit-btn {
+  margin-top: 0;
+  flex: 1 1 200px;
+}
+
+.stellar-whatsapp-btn {
+  flex: 1 1 200px;
+  position: relative;
+  overflow: hidden;
+  padding: 1.1rem 1.6rem;
+  border-radius: 10px;
+  background: rgba(37, 211, 102, 0.1);
+  color: #25d366;
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+
+.stellar-whatsapp-btn:hover {
+  background: #25d366;
+  color: #050505;
+  border-color: #25d366;
+  box-shadow: 0 0 25px rgba(37, 211, 102, 0.5), 0 5px 15px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.stellar-whatsapp-btn svg {
+  flex-shrink: 0;
+}
+
 .stellar-transmit-btn:hover {
   background: #f0f0f5;
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 5px 20px rgba(0, 0, 0, 0.4);

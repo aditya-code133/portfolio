@@ -52,6 +52,31 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2400);
   };
 
+  const handleWhatsAppSend = (e) => {
+    e.preventDefault();
+    playClickSound();
+
+    const name = formData.senderName.trim();
+    const email = formData.senderEmail.trim();
+    const message = formData.senderMessage.trim();
+
+    let fullText = 'Hi Aditya,';
+    if (name) {
+      fullText += ` I am ${name}.`;
+    }
+    if (email) {
+      fullText += ` My email is ${email}.`;
+    }
+    if (message) {
+      fullText += `\n\n${message}`;
+    } else {
+      fullText += `\n\nI visited your portfolio and wanted to connect with you!`;
+    }
+
+    const whatsappUrl = `https://wa.me/918217293794?text=${encodeURIComponent(fullText)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     playClickSound();
@@ -370,14 +395,29 @@ export default function Contact() {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="stellar-transmit-btn hoverable uppercase"
-                    onMouseEnter={playHoverSound}
-                  >
-                    <span className="transmit-btn-shimmer" />
-                    <span className="transmit-btn-text">Send Message ➔</span>
-                  </button>
+                  <div className="contact-actions-row">
+                    <button
+                      type="submit"
+                      className="stellar-transmit-btn hoverable uppercase"
+                      onMouseEnter={playHoverSound}
+                    >
+                      <span className="transmit-btn-shimmer" />
+                      <span className="transmit-btn-text">Send Message ➔</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleWhatsAppSend}
+                      className="stellar-whatsapp-btn hoverable uppercase font-mono"
+                      onMouseEnter={playHoverSound}
+                      title="Send message with entered details via WhatsApp"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.062-2.146-.54-1.859-.77-3.056-2.673-3.149-2.798-.093-.125-.757-.999-.757-1.906s.475-1.353.645-1.538c.17-.186.371-.232.495-.232.124 0 .248 0 .356.006.114.006.267-.042.417.321.155.371.53 1.288.577 1.381.047.093.078.202.016.326-.062.124-.093.202-.186.311-.093.109-.196.243-.28.326-.093.093-.19.196-.082.381.109.186.483.797 1.036 1.289.712.634 1.312.83 1.498.923.186.093.295.078.404-.047.109-.124.466-.543.59-.73.124-.186.248-.155.417-.093.17.062 1.077.508 1.263.601.186.093.31.14.356.217.047.078.047.45-.097.855zM12.029 2C6.495 2 2 6.495 2 12.028c0 1.93.548 3.731 1.498 5.263L2 22l4.863-1.458c1.474.887 3.204 1.396 5.166 1.396 5.533 0 10.029-4.495 10.029-10.028C22.058 6.495 17.562 2 12.029 2zm0 18.232c-1.688 0-3.25-.512-4.56-1.39l-.327-.219-2.873.86.874-2.804-.239-.344c-.985-1.417-1.507-3.094-1.507-4.811 0-4.526 3.682-8.208 8.209-8.208 4.526 0 8.208 3.682 8.208 8.208 0 4.526-3.682 8.208-8.208 8.208z"/>
+                      </svg>
+                      <span>Chat on WhatsApp</span>
+                    </button>
+                  </div>
 
                   {statusMsg && (
                     <div className="form-status-msg text-glow font-mono">
