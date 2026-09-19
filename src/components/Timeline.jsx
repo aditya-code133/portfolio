@@ -22,7 +22,7 @@ export default function Timeline() {
       title: 'Computer Science & Core Foundations',
       headline: 'DSA, C, Python & Algorithmic Rigor',
       summary:
-        '4th-year Computer Science & Engineering journey at Sphitorium Engineering College. Focused on building strong fundamentals in Data Structures, Algorithms, C memory management, and Python scripting.',
+        '4th-year Computer Science & Engineering student. Focused on building strong fundamentals in Data Structures, Algorithms, C memory management, and Python scripting.',
       metrics: [
         { label: 'Degree', value: 'B.Tech CSE' },
         { label: 'Core Focus', value: 'DSA & Systems' },

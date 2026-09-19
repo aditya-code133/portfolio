@@ -12,7 +12,7 @@ export default function About() {
           <div className="gsap-reveal">
             <MaskedTitle number="1." text="About Me" />
             <p className="text-gray about-text">
-              I’m Aditya Swain, a 4th-year Computer Science & Engineering student at Sphitorium Engineering College. I specialize in building performant, modern web applications and have a deep interest in Data Structures & Algorithms, C, Python, and system-level performance. Driven by first-principles problem solving, I design clean component hierarchies, robust API endpoints, and scalable software solutions that operate reliably in production environments.
+              I’m Aditya Swain, a 4th-year Computer Science & Engineering student. I specialize in building performant, modern web applications and have a deep interest in Data Structures & Algorithms, C, Python, and system-level performance. Driven by first-principles problem solving, I design clean component hierarchies, robust API endpoints, and scalable software solutions that operate reliably in production environments.
             </p>
             <div className="font-mono text-gray skill-list text-sm">
               <p><span style={{ color: '#fff' }}></span> Data Structures, Algorithms & Problem Solving</p>

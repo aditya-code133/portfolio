@@ -7,7 +7,6 @@ A high-performance, 3D developer portfolio engineered with **React**, **Three.js
 ## 👨‍💻 About Me
 - **Name:** Aditya Swain
 - **Role:** Software Developer & 4th-Year Computer Science & Engineering Student
-- **Institution:** Sphitorium Engineering College
 - **Specialization:** Data Structures & Algorithms, C, Python, Modern Full-Stack Web Architecture, Performance Optimization
 
 ---
