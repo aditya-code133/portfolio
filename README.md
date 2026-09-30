@@ -1,5 +1,7 @@
 # Aditya Swain | Developer Portfolio
 
+🔗 **Live Site:** [aditya-code133.github.io/portfolio](https://aditya-code133.github.io/portfolio/)
+
 A high-performance, 3D developer portfolio engineered with **React**, **Three.js**, **GLSL Shaders**, and **GSAP**, optimized for silky-smooth 120 FPS interactions and responsive across all modern devices.
 
 ---

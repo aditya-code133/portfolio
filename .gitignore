@@ -30,6 +30,12 @@ dist-ssr
 .env*
 !.env.example
 
+# Agent / AI tooling
+.agent/
+
+# Unrelated practice/test code
+practice1/
+
 # Build artifacts & deploy scripts
 .vite
 deploy.bat
