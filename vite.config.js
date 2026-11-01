@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import { cloudflare } from '@cloudflare/vite-plugin';
 
 function devEmailApiPlugin() {
   return {
@@ -164,8 +163,8 @@ function devEmailApiPlugin() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), cloudflare(), devEmailApiPlugin()],
-  base: '/portfolio/',
+  plugins: [react(), devEmailApiPlugin()],
+  base: '/',
   server: {
     host: '0.0.0.0',
     port: 3000,
